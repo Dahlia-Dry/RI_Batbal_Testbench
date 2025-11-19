@@ -41,7 +41,7 @@ def classify_instruments(instruments):
 
 
 if __name__ == "__main__":
-    print("🔍 Scanning LAN for instruments...\n")
+    print("Scanning LAN for instruments...\n")
     instruments = discover_instruments()
     classified = classify_instruments(instruments)
 

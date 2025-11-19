@@ -1,5 +1,6 @@
 # OSCILLOSCOPE
 from instrument_base import Instrument
+import pyvisa
 
 class TektronixMSO58(Instrument):
     def autoset(self):
@@ -14,4 +15,11 @@ class TektronixMSO58(Instrument):
         data = self.query("CURV?")
         return [float(v) for v in data.split(",")]
     
-    
+def test():
+    rm = pyvisa.ResourceManager()
+
+    scope = rm.open_resource("TCPIP::10.59.133.248::INSTR")
+
+    print(scope.query("*IDN?"))
+
+test()
