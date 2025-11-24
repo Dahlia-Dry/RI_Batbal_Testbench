@@ -1,0 +1,23 @@
+[2025-11-24 14:40:44.230683] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 14:40:44.232681] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 14:40:44.232681] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 14:40:44.233680] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 14:40:44.368603] [tm_devices] [ WARNING] A VISA IO error occurred when attempting to read the status byte or clear the output buffer of the resource `TCPIP0::10.59.133.248::4000::SOCKET`.
+Error: VI_ERROR_INV_SETUP (-1073807302): Unable to start operation because setup is invalid (usually due to attributes being set to an inconsistent state).
+[2025-11-24 14:40:44.381595] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 14:40:44.382595] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 14:40:44.382595] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 14:40:44.384593] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 14:40:44.412577] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'AUTOSet EXECute'
+[2025-11-24 14:40:44.413577] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:ENCdg RIBinary'
+[2025-11-24 14:40:44.413577] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:WIDth 1'
+[2025-11-24 14:40:44.414576] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:SOURCE CH1'
+[2025-11-24 14:40:44.414576] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:XINCR?'
+[2025-11-24 14:40:44.444558] [tm_devices] [    INFO] Response from 'WFMPRE:XINCR?' >>  '1.60E-6'
+[2025-11-24 14:40:44.444558] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+[2025-11-24 14:40:44.458550] [tm_devices] [    INFO] Response from 'WFMPRE:YMULT?' >>  '80.0000E-3'
+[2025-11-24 14:40:44.458550] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YOFF?'
+[2025-11-24 14:40:44.473541] [tm_devices] [    INFO] Response from 'WFMPRE:YOFF?' >>  '0.0E+0'
+[2025-11-24 14:40:44.474541] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YZERO?'
+[2025-11-24 14:40:44.488534] [tm_devices] [    INFO] Response from 'WFMPRE:YZERO?' >>  '-330.0000E-3'
+[2025-11-24 14:40:44.488534] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CURVE?'

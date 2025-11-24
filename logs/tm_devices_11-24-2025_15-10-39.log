@@ -1,0 +1,54 @@
+[2025-11-24 15:10:39.089034] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 15:10:39.091073] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 15:10:39.091073] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 15:10:39.092069] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 15:10:39.204570] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 15:10:39.205571] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 15:10:39.206538] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 15:10:39.208539] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 15:10:39.209568] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HARDCOPY:FORMAT PNG'
+[2025-11-24 15:10:39.210537] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HARDCOPY:PORT FILE'
+[2025-11-24 15:10:39.211568] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HARDCOPY:FILENAME "scope_screenshot.png"'
+[2025-11-24 15:10:39.212584] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HARDCOPY START'
+[2025-11-24 15:10:39.213536] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query Binary Values >>  'FILESystem:READFILE "scope_screenshot.png"'
+[2025-11-24 15:10:49.215284] [tm_devices] [   ERROR] The binary query of SCOPE 1 "SCOPE1" for 'FILESystem:READFILE "scope_screenshot.png"' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+[2025-11-24 15:10:49.216284] [tm_devices] [CRITICAL] The binary query of SCOPE 1 "SCOPE1" for 'FILESystem:READFILE "scope_screenshot.png"' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 439, in query_binary
+    response = self._visa_resource.query_binary_values(  # pyright: ignore[reportUnknownMemberType]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 798, in query_binary_values
+    return self.read_binary_values(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 613, in read_binary_values
+    block = self._read_raw(chunk_size, monitoring_interface=monitoring_interface)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 473, in _read_raw
+    chunk, status = self.visalib.read(self.session, size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2339, in read
+    ret = library.viRead(session, buffer, count, byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 227, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\highlevel.py", line 252, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 32, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 29, in main
+    grab_screenshot(scope)
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 13, in grab_screenshot
+    file_bytes = scope.query_binary(f'FILESystem:READFILE "{filename}"')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 457, in query_binary
+    raise visa.Error(msg) from error
+pyvisa.errors.Error: The binary query of SCOPE 1 "SCOPE1" for 'FILESystem:READFILE "scope_screenshot.png"' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')

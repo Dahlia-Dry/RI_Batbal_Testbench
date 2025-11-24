@@ -1,0 +1,32 @@
+[2025-11-24 15:15:36.264067] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 15:15:36.267065] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 15:15:36.267065] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 15:15:36.268065] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 15:15:36.397989] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 15:15:36.398988] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 15:15:36.399988] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 15:15:36.401987] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 15:15:36.403986] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'SAVE:IMAGE:COMPOSITION color'
+[2025-11-24 15:15:36.412980] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'SAVE:IMAGE:COMPOSITION?'
+[2025-11-24 15:15:36.413980] [tm_devices] [    INFO] Response from 'SAVE:IMAGE:COMPOSITION?' >>  'INVERTED'
+[2025-11-24 15:15:36.414979] [tm_devices] [CRITICAL] ERROR: (SCOPE 1 "SCOPE1") : Failed to set SAVE:IMAGE:COMPOSITION to color, Actual result does not match the expected result, exp: color, act: INVERTED
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 39, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 36, in main
+    grab_screenshot(scope)
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo3.py", line 13, in grab_screenshot
+    png_bytes = scope._save_screenshot(
+                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\drivers\scopes\tekscope\tekscope.py", line 732, in _save_screenshot
+    self.set_and_check("SAVE:IMAGE:COMPOSITION", colors)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 735, in set_and_check
+    verify_values(
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 104, in verify_values
+    raise_error(unique_identifier, message, condense_printout=condense_printout)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 23, in raise_error
+    raise AssertionError(message)
+AssertionError: ERROR: (SCOPE 1 "SCOPE1") : Failed to set SAVE:IMAGE:COMPOSITION to color, Actual result does not match the expected result, exp: color, act: INVERTED

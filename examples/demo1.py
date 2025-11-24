@@ -1,54 +1,32 @@
 import sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
-
-from instrument_interface.rigol_dg1062z import RigolDG1062Z
-from instrument_interface.tektronix_mso58 import TekMSO58
-from instrument_interface.config_loader import load_config
 import matplotlib.pyplot as plt
+from instrument_interface.tektronix_mso58 import TekMSO58
 
 def main():
 
-    config = load_config()
-    rigol_ip = config["instruments"]["rigol_dg1062z"]["ip"]
-    tek_ip   = config["instruments"]["tektronix_mso58"]["ip"]
+    # Your Tek IP
+    TEK_IP = "TCPIP0::10.59.133.248::inst0::INSTR"
 
-    # -------------------------
-    # Connect to instruments
-    # -------------------------
-    rigol = RigolDG1062Z(rigol_ip)
-    rigol.connect()
-
-    tek = TekMSO58(f"TCPIP::{tek_ip}::INSTR")
+    tek = TekMSO58(TEK_IP)
     tek.connect()
 
-    # -------------------------
-    # Configure Rigol output
-    # -------------------------
-    rigol.configure_sine(channel=1, freq=200, amplitude=2.0)
-    rigol.output_on(1)
+    # Turn CH1 on and autoscale
+    tek.channel_on(1)
+    #tek.autoset()
 
-    # -------------------------
-    # Configure scope
-    # -------------------------
-    tek.set_channel_on(1)
-    tek.autoset()
-
-    # -------------------------
-    # Acquire waveform
-    # -------------------------
+    print("Acquiring waveform...")
     t, v = tek.acquire_waveform(1)
 
-    # -------------------------
     # Plot
-    # -------------------------
     plt.plot(t, v)
-    plt.title("Rigol → Tektronix MSO58")
+    plt.title("Tektronix MSO58 Waveform")
     plt.xlabel("Time (s)")
     plt.ylabel("Voltage (V)")
+    plt.grid(True)
     plt.show()
 
-    rigol.output_off(1)
     tek.close()
 
 if __name__ == "__main__":

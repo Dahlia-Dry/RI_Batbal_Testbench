@@ -1,0 +1,21 @@
+[2025-11-24 14:50:43.701458] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 14:50:43.703457] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 14:50:43.703457] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 14:50:43.704457] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 14:50:43.830354] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 14:50:43.830354] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 14:50:43.831354] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 14:50:43.833353] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 14:50:43.833353] [tm_devices] [CRITICAL] 'MSO5' object has no attribute 'pi'
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 49, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 43, in main
+    get_screenshot(scope)
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 6, in get_screenshot
+    pi = scope.pi
+         ^^^^^^^^
+AttributeError: 'MSO5' object has no attribute 'pi'

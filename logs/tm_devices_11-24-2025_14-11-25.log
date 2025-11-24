@@ -1,0 +1,46 @@
+[2025-11-24 14:11:25.876928] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 14:11:25.878916] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 14:11:25.878916] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 14:11:25.879915] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 14:11:32.910184] [tm_devices] [ WARNING] A VISA IO error occurred when attempting to read the status byte or clear the output buffer of the resource `TCPIP0::10.59.133.248::inst0::INSTR`.
+Error: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+[2025-11-24 14:11:39.912044] [tm_devices] [CRITICAL] VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 55, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 23, in main
+    tek.connect()
+  File "c:\Users\s250127\RI_Batbal_Testbench\instrument_interface\tektronix_mso58.py", line 14, in connect
+    self.scope = self.dm.add_scope(self.address, alias=self.alias)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\device_manager.py", line 616, in add_scope
+    self._add_device(
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\device_manager.py", line 1280, in _add_device
+    return self.__create_device(new_device_name, new_device_config, 4)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\device_manager.py", line 1405, in __create_device
+    new_device = self.__select_visa_device_driver(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\device_manager.py", line 1502, in __select_visa_device_driver
+    idn_response = self.__clear_visa_output_buffer_and_get_idn(visa_resource)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\device_manager.py", line 1321, in __clear_visa_output_buffer_and_get_idn
+    visa_resource.write("*IDN?")
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 213, in write
+    count = self.write_raw(message.encode(enco))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 173, in write_raw
+    return self.visalib.write(self.session, message)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2798, in write
+    ret = library.viWrite(session, data, len(data), byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 227, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\highlevel.py", line 252, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.

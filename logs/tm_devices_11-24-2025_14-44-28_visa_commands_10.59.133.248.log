@@ -1,0 +1,4 @@
+HEADER OFF
+SAVE:IMAGe:FORMat PNG
+SAVE:IMAGe:STARt
+FILESystem:READFile "image.png"

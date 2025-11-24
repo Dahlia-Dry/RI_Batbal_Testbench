@@ -1,0 +1,41 @@
+[2025-11-24 15:28:52.238597] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 15:28:52.240597] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 15:28:52.241596] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 15:28:52.241596] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 15:28:52.352552] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 15:28:52.352552] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 15:28:52.354529] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 15:28:52.355527] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 15:28:52.356574] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'SELECT:CH1 ON'
+[2025-11-24 15:28:52.357531] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'AUTOSet EXECute'
+[2025-11-24 15:28:52.358529] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-11-24 15:28:52.358529] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DATA:SOURCE:AVAIL?'
+[2025-11-24 15:28:52.397526] [tm_devices] [    INFO] Response from ':DATA:SOURCE:AVAIL?' >>  'CH1,CH7,CH8'
+[2025-11-24 15:28:52.398527] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-11-24 15:28:52.399503] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'DATA:SOURCE?'
+[2025-11-24 15:28:52.403522] [tm_devices] [    INFO] Response from 'DATA:SOURCE?' >>  'CH1'
+[2025-11-24 15:28:52.404523] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':DATA:ENC ASCII'
+[2025-11-24 15:28:52.405500] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DATA:ENC?'
+[2025-11-24 15:28:52.406499] [tm_devices] [    INFO] Response from ':DATA:ENC?' >>  'RIBINARY'
+[2025-11-24 15:28:52.407522] [tm_devices] [CRITICAL] ERROR: (SCOPE 1 "SCOPE1") : Failed to set :DATA:ENC to ASCII, Actual result does not match the expected result, exp: ASCII, act: RIBINARY
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 33, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 20, in main
+    t, v = tek.acquire_waveform(1)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\s250127\RI_Batbal_Testbench\instrument_interface\tektronix_mso58.py", line 67, in acquire_waveform
+    y, x0, dx = self.scope.curve_query(ch)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\drivers\scopes\tekscope\tekscope.py", line 391, in curve_query
+    self.set_and_check(":DATA:ENC", "ASCII")
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 735, in set_and_check
+    verify_values(
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 104, in verify_values
+    raise_error(unique_identifier, message, condense_printout=condense_printout)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 23, in raise_error
+    raise AssertionError(message)
+AssertionError: ERROR: (SCOPE 1 "SCOPE1") : Failed to set :DATA:ENC to ASCII, Actual result does not match the expected result, exp: ASCII, act: RIBINARY
