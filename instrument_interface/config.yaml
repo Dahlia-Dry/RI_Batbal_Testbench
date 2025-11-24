@@ -1,0 +1,12 @@
+instruments:
+  tektronix_mso58:
+    ip: "10.59.133.248"
+
+  keysight_e36312:
+    ip: "10.59.133.254"
+
+  rigol_dg1062z:
+    ip: "10.59.133.252"
+
+  keithley_2450:
+    ip: "10.59.133.251"

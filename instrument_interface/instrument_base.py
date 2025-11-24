@@ -1,26 +1,29 @@
 import pyvisa
 
 class Instrument:
-    def __init__(self, ip_address):
-        self.ip_address = ip_address
+    def __init__(self, ip_address, timeout=5000):
+        self.ip = ip_address
         self.rm = pyvisa.ResourceManager()
-        self.connection = None
+        self.timeout = timeout
+        self.inst = None
 
     def connect(self):
-        resource = f"TCPIP::{self.ip_address}::INSTR"
-        self.connection = self.rm.open_resource(resource)
-        print(f"Connected to {self.idn}")
-
-    @property
-    def idn(self):
+        resource = f"TCPIP::{self.ip}::INSTR"
+        self.inst = self.rm.open_resource(resource)
+        self.inst.timeout = self.timeout
         return self.query("*IDN?")
 
     def write(self, cmd):
-        self.connection.write(cmd)
+        if self.inst is None:
+            raise RuntimeError("Instrument not connected.")
+        self.inst.write(cmd)
 
     def query(self, cmd):
-        return self.connection.query(cmd)
+        if self.inst is None:
+            raise RuntimeError("Instrument not connected.")
+        return self.inst.query(cmd).strip()
 
     def close(self):
-        if self.connection:
-            self.connection.close()
+        if self.inst:
+            self.inst.close()
+            self.inst = None
