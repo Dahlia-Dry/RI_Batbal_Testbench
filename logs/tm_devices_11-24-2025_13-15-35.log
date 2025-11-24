@@ -1,0 +1,27 @@
+[2025-11-24 13:15:35.789404] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 13:15:35.791403] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 13:15:35.791403] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 13:15:35.791403] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 13:15:35.818388] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 13:15:35.819387] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 13:15:35.820387] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 13:15:35.821386] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 13:15:35.831380] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'SELECT:CH1 ON'
+[2025-11-24 13:15:35.832380] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'AUTOSet EXECute'
+[2025-11-24 13:15:35.833379] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:ENCdg RIBinary'
+[2025-11-24 13:15:35.834378] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:WIDth 1'
+[2025-11-24 13:15:35.835377] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATa:SOURCE CH1'
+[2025-11-24 13:15:35.836378] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+[2025-11-24 13:15:35.861364] [tm_devices] [    INFO] Response from 'WFMPRE:YMULT?' >>  '4.0000E-3'
+[2025-11-24 13:15:35.862362] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YOFF?'
+[2025-11-24 13:15:35.865361] [tm_devices] [    INFO] Response from 'WFMPRE:YOFF?' >>  '0.0E+0'
+[2025-11-24 13:15:35.865361] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YZERO?'
+[2025-11-24 13:15:35.872357] [tm_devices] [    INFO] Response from 'WFMPRE:YZERO?' >>  '0.0E+0'
+[2025-11-24 13:15:35.873356] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:XINCR?'
+[2025-11-24 13:15:35.876354] [tm_devices] [    INFO] Response from 'WFMPRE:XINCR?' >>  '4.0E-9'
+[2025-11-24 13:15:35.876354] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CURVe?'
+[2025-11-24 13:15:50.405295] [tm_devices] [    INFO] Closing Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 13:15:50.406294] [tm_devices] [    INFO] Closing Connections to Devices
+[2025-11-24 13:15:50.407296] [tm_devices] [    INFO] Closing Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 13:15:50.408293] [tm_devices] [ WARNING] SCOPE 1 was previously closed, no need to close it again
+[2025-11-24 13:15:50.408293] [tm_devices] [    INFO] DeviceManager Closed

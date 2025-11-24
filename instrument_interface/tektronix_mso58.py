@@ -1,50 +1,82 @@
-from instrument_base import Instrument
-import numpy as np
+# tektronix_mso58.py
+from tm_devices import DeviceManager
 
-class TekMSO58(Instrument):
+class TekMSO58:
+    def __init__(self, address, alias="SCOPE1"):
+        self.address = address
+        self.alias = alias
+        self.dm = None
+        self.scope = None
 
-    # -------------------------
-    # Basic configuration
-    # -------------------------
+    def connect(self):
+        print(f"Connecting to Tektronix MSO58 at {self.address}...")
+        self.dm = DeviceManager()
+        self.scope = self.dm.add_scope(self.address, alias=self.alias)
+
+        idn = self.scope.query("*IDN?")
+        print("Connected:", idn)
+        return idn
+
+    def close(self):
+        print("Closing Tektronix MSO58...")
+        try:
+            if self.scope:
+                self.scope.close()
+        except Exception:
+            pass
+        try:
+            if self.dm:
+                self.dm.close()
+        except Exception:
+            pass
+        print("Closed.")
+
+    # ---------------------------
+    # Channel control (SCPI only)
+    # ---------------------------
+    def set_channel_on(self, ch: int):
+        self.scope.write(f"SELECT:CH{ch} ON")
+
+    def set_channel_off(self, ch: int):
+        self.scope.write(f"SELECT:CH{ch} OFF")
+
+    def set_timebase(self, scale: float):
+        self.scope.write(f"HORizontal:SCAle {scale}")
+
+    def set_vertical_scale(self, ch: int, scale: float):
+        self.scope.write(f"CH{ch}:SCAle {scale}")
 
     def autoset(self):
-        self.write("AUTOS EXEC")
+        self.scope.write("AUTOSet EXECute")
 
-    def set_channel_on(self, ch):
-        self.write(f"SEL:CH{ch} ON")
+    # ---------------------------
+    # Waveform acquisition (binary)
+    # ---------------------------
+    def acquire_waveform(self, ch: int):
+        s = self.scope
 
-    def set_channel_off(self, ch):
-        self.write(f"SEL:CH{ch} OFF")
+        s.write("DATa:ENCdg RIBinary")
+        s.write("DATa:WIDth 1")
+        s.write(f"DATa:SOURCE CH{ch}")
 
-    def set_vertical_scale(self, ch, scale_vdiv):
-        self.write(f"CH{ch}:SCA {scale_vdiv}")
+        ymult = float(s.query("WFMPRE:YMULT?"))
+        yoff  = float(s.query("WFMPRE:YOFF?"))
+        yzero = float(s.query("WFMPRE:YZERO?"))
+        xincr = float(s.query("WFMPRE:XINCR?"))
 
-    def set_horizontal_scale(self, sec_div):
-        self.write(f"HOR:SCA {sec_div}")
+        s.write("CURVe?")
+        raw = s.visa_resource.read_raw()
 
-    # -------------------------
-    # Measurements
-    # -------------------------
+        # parse Tek block header
+        prefix = raw[0:2].decode("ascii")  # should be '#4' or similar
+        digits = int(prefix[1])
+        header_len = 2 + digits
+        data = raw[header_len:-1]   # everything except final LF
 
-    def measure_vpp(self, ch):
-        self.write(f"MEASU:MEAS1:SOU CH{ch}")
-        self.write("MEASU:MEAS1:TYPe VPP")
-        return float(self.query("MEASU:MEAS1:VAL?"))
+        import numpy as np
+        samples = np.frombuffer(data, dtype=np.int8)
 
-    def measure_freq(self, ch):
-        self.write(f"MEASU:MEAS1:SOU CH{ch}")
-        self.write("MEASU:MEAS1:TYPe FREQuency")
-        return float(self.query("MEASU:MEAS1:VAL?"))
+        volts = (samples - yoff) * ymult + yzero
+        t = np.arange(len(volts)) * xincr
 
-    # -------------------------
-    # Waveform acquisition
-    # -------------------------
-
-    def acquire_waveform(self, ch):
-        self.write(f"DATa:SOUrce CH{ch}")
-        self.write("DATa:ENCdg ASCII")
-        self.write("DATa:WIDth 1")
-
-        raw = self.query("CURVe?")
-        data = np.array([float(x) for x in raw.split(",")])
-        return data
+        return t, volts

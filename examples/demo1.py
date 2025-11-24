@@ -1,28 +1,55 @@
+import sys, os
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, project_root)
 
-from instrument_interface.config_loader import load_config
-
-from instrument_interface.keysight_e36312 import KeysightE36312
+from instrument_interface.rigol_dg1062z import RigolDG1062Z
 from instrument_interface.tektronix_mso58 import TekMSO58
+from instrument_interface.config_loader import load_config
 import matplotlib.pyplot as plt
 
-config = load_config()
+def main():
 
-tek_ip = config["instruments"]["tektronix_mso58"]["ip"]
-psu_ip = config["instruments"]["keysight_e36312"]["ip"]
+    config = load_config()
+    rigol_ip = config["instruments"]["rigol_dg1062z"]["ip"]
+    tek_ip   = config["instruments"]["tektronix_mso58"]["ip"]
 
-scope = TekMSO58(tek_ip)
-psu = KeysightE36312(psu_ip)
+    # -------------------------
+    # Connect to instruments
+    # -------------------------
+    rigol = RigolDG1062Z(rigol_ip)
+    rigol.connect()
 
-print("Connecting to Scope:", scope.connect())
+    tek = TekMSO58(f"TCPIP::{tek_ip}::INSTR")
+    tek.connect()
 
-# Setup scope
-scope.autoset()
-scope.set_channel_on(1)
+    # -------------------------
+    # Configure Rigol output
+    # -------------------------
+    rigol.configure_sine(channel=1, freq=200, amplitude=2.0)
+    rigol.output_on(1)
 
-# Acquire waveform
-wave = scope.acquire_waveform(1)
-print("Captured samples:", len(wave))
+    # -------------------------
+    # Configure scope
+    # -------------------------
+    tek.set_channel_on(1)
+    tek.autoset()
 
-plt.plot(wave)
-plt.title("Waveform from Tektronix MSO58 CH1")
-plt.show()
+    # -------------------------
+    # Acquire waveform
+    # -------------------------
+    t, v = tek.acquire_waveform(1)
+
+    # -------------------------
+    # Plot
+    # -------------------------
+    plt.plot(t, v)
+    plt.title("Rigol → Tektronix MSO58")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Voltage (V)")
+    plt.show()
+
+    rigol.output_off(1)
+    tek.close()
+
+if __name__ == "__main__":
+    main()
