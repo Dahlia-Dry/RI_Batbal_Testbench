@@ -1,5 +1,6 @@
 # tektronix_mso58.py
 from tm_devices import DeviceManager
+from .tekscope_connection import preclean_visa_buffer
 
 class TekMSO58:
     """
@@ -21,12 +22,14 @@ class TekMSO58:
 
     def connect(self):
         print(f"Connecting to Tektronix MSO58 at {self.address}...")
+
+        # FIXES the random failure
+        preclean_visa_buffer(self.address)
+
         self.dm = DeviceManager()
         self.scope = self.dm.add_scope(self.address, alias=self.alias)
 
-        idn = self.scope.query("*IDN?")
-        print("Connected:", idn)
-        return idn
+        print("Connected:", self.scope.query("*IDN?"))
 
     # ------------------------------
     # Basic SCPI passthrough

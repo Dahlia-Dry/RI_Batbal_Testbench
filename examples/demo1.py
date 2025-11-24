@@ -1,24 +1,21 @@
+#WORKING
+# captures the waveform currently displayed on the screen and plots it
 import sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 import matplotlib.pyplot as plt
 from instrument_interface.tektronix_mso58 import TekMSO58
 
-from instrument_interface.tekscope_connection import TekScopeConnectionManager
-
 def main():
 
     # Your Tek IP
     TEK_IP = "TCPIP0::10.59.133.248::inst0::INSTR"
 
-    scope_conn = TekScopeConnectionManager("TCPIP0::10.59.133.248::inst0::INSTR")
-    tek = scope_conn.connect()
-
-    #tek = TekMSO58(TEK_IP)
-    #tek.connect()
+    tek = TekMSO58(TEK_IP)
+    tek.connect()
 
     # Turn CH1 on and autoscale
-    tek.channel_on(1)
+    #tek.channel_on(1)
     #tek.autoset()
 
     print("Acquiring waveform...")

@@ -9,6 +9,7 @@ class Instrument:
 
     def connect(self):
         resource = f"TCPIP::{self.ip}::INSTR"
+        print(resource)
         self.inst = self.rm.open_resource(resource)
         self.inst.timeout = self.timeout
         return self.query("*IDN?")

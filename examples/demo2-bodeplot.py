@@ -1,101 +1,120 @@
-import sys, os
+import sys, os, time
+import numpy as np
+import matplotlib.pyplot as plt
+
+# --- project imports ---
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-
 from instrument_interface.rigol_dg1062z import RigolDG1062Z
 from instrument_interface.tektronix_mso58 import TekMSO58
-from instrument_interface.config_loader import load_config
 
 
-def measure_amplitude_and_phase(t, v_in, v_out):
-    """Return (gain, phase_deg) based on cross-correlation."""
-    # amplitude = half peak-to-peak
-    A_in = (np.max(v_in) - np.min(v_in)) / 2
-    A_out = (np.max(v_out) - np.min(v_out)) / 2
-    gain = A_out / A_in if A_in != 0 else np.nan
-
-    # Phase via cross-correlation
-    c = np.correlate(v_out - np.mean(v_out), v_in - np.mean(v_in), mode="full")
-    delay_idx = np.argmax(c) - (len(v_in) - 1)
-    dt = t[1] - t[0]
-    delay_time = delay_idx * dt
-    freq = 1 / (t[-1] - t[0])  # rough estimate (1 cycle in capture)
-
-    phase_deg = -delay_time * freq * 360
-    return gain, phase_deg
+# ---------------------------------------------------------
+# Measurement helpers
+# ---------------------------------------------------------
+def compute_amplitude(y):
+    """Return peak amplitude from waveform."""
+    return (np.max(y) - np.min(y)) / 2.0
 
 
+def compute_phase(t, y, freq_hz):
+    """
+    Estimate phase from time-of-peak.
+    crude but completely sufficient for a Bode sweep.
+    """
+    idx = np.argmax(y)
+    t_peak = t[idx]
+    return (t_peak * freq_hz * 360.0) % 360
+
+
+# ---------------------------------------------------------
+# Main sweep
+# ---------------------------------------------------------
 def main():
-    config = load_config()
 
-    rigol_ip = config["instruments"]["rigol_dg1062z"]["ip"]
-    tek_ip   = config["instruments"]["tektronix_mso58"]["ip"]
+    RIGOL_ADDR = "10.59.133.252"   # <-- your Rigol
+    TEK_ADDR   = "TCPIP0::10.59.133.248::inst0::INSTR"   # <-- your MSO58
 
-    # ---------------------------
-    # Connect instruments
-    # ---------------------------
-    print("Connecting instruments...")
-    rigol = RigolDG1062Z(rigol_ip)
-    rigol.connect()
+    freqs = np.logspace(2, 4, num=15)  # 100 Hz → 10 kHz sweep
+    drive_amplitude = 1.0  # Vpp
 
-    tek = TekMSO58(f"TCPIP::{tek_ip}::INSTR")
+    # -----------------------------------------------------
+    # Connect to instruments
+    # -----------------------------------------------------
+    print("Connecting to Rigol DG1062Z... at ", RIGOL_ADDR)
+    rig = RigolDG1062Z(RIGOL_ADDR)
+    rig.connect()
+    print("Rigol:", rig.id())
+
+    print("Connecting to Tektronix MSO58...")
+    tek = TekMSO58(TEK_ADDR)
     tek.connect()
 
-    # ---------------------------
-    # Frequency sweep parameters
-    # ---------------------------
-    freqs = np.logspace(1, 5, 30)  # 10 Hz → 100 kHz, 30 points
-    amplitude = 1.0  # Vpp
-    results_gain = []
-    results_phase = []
+    # Ensure Tek is ready
+    tek.channel_on(1)
+    tek.autoset()
 
-    print("Starting frequency sweep...")
+    amps = []
+    phases = []
+
+    print("\nStarting frequency sweep...\n")
 
     for f in freqs:
-        print(f"\n--- Frequency = {f:.1f} Hz ---")
+        print(f" → {f:.2f} Hz")
 
-        # Signal generator settings
-        rigol.configure_sine(channel=1, freq=f, amplitude=amplitude)
-        rigol.output_on(1)
-        time.sleep(0.1)
+        # -------------------------------------------------
+        # Configure Rigol output
+        # -------------------------------------------------
+        rig.configure_sine(
+            channel=1,
+            freq=f,
+            amplitude=drive_amplitude,
+            offset=0
+        )
+        rig.output_on(1)
 
-        # Scope autoset at first frequency
-        if f == freqs[0]:
-            tek.autoset()
+        # allow scope to settle
+        time.sleep(0.7)
 
-        # Acquire waveform
-        t, ch1 = tek.acquire_waveform(1)
-        _, ch2 = tek.acquire_waveform(2)
+        # -------------------------------------------------
+        # Acquire waveform from Tek (your binary method)
+        # -------------------------------------------------
+        t, v = tek.acquire_waveform(1)
 
-        gain, phase = measure_amplitude_and_phase(t, ch1, ch2)
-        results_gain.append(gain)
-        results_phase.append(phase)
+        # -------------------------------------------------
+        # Compute Bode data
+        # -------------------------------------------------
+        amp = compute_amplitude(v)
+        phase = compute_phase(t, v, f)
 
-    rigol.output_off(1)
+        amps.append(amp)
+        phases.append(phase)
+
+    rig.output_off(1)
+    rig.close()
     tek.close()
 
-    # ---------------------------
-    # Plot Bode diagram
-    # ---------------------------
-    fig, ax1 = plt.subplots()
+    # ---------------------------------------------------------
+    # Plot magnitude
+    # ---------------------------------------------------------
+    plt.figure(figsize=(10,6))
+    plt.semilogx(freqs, 20*np.log10(np.array(amps)), marker='o')
+    plt.grid(True, which='both')
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Magnitude (dB)")
+    plt.title("Bode Plot – Magnitude")
+    plt.show()
 
-    # Magnitude (gain)
-    ax1.set_xscale("log")
-    ax1.set_xlabel("Frequency (Hz)")
-    ax1.set_ylabel("Gain (V/V)", color="tabblue")
-    ax1.plot(freqs, results_gain, "-o")
-    ax1.grid(True, which="both")
-
-    # Phase
-    ax2 = ax1.twinx()
-    ax2.set_ylabel("Phase (deg)", color="tab:red")
-    ax2.plot(freqs, results_phase, "r^-")
-
-    plt.title("Bode Plot — Automated via Rigol + Tektronix MSO58")
+    # ---------------------------------------------------------
+    # Plot phase
+    # ---------------------------------------------------------
+    plt.figure(figsize=(10,6))
+    plt.semilogx(freqs, phases, marker='o')
+    plt.grid(True, which='both')
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Phase (deg)")
+    plt.title("Bode Plot – Phase")
     plt.show()
 
 

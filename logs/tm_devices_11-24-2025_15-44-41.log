@@ -1,0 +1,83 @@
+[2025-11-24 15:44:41.637391] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 15:44:41.642388] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 15:44:41.642388] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 15:44:41.643376] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 15:44:41.683336] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 15:44:41.683336] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 15:44:41.686336] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 15:44:41.688334] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 15:44:41.689337] [tm_devices] [   DEBUG] SCOPE 1 "SCOPE1" VISA timeout set to: 500.000ms
+[2025-11-24 15:44:41.689337] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 15:44:41.691332] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 15:44:41.692332] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':VERBose 1'
+[2025-11-24 15:44:41.693360] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 15:44:41.697328] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 15:44:41.697328] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 15:44:41.700327] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 15:44:41.700327] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBETYPE?'
+[2025-11-24 15:44:41.705323] [tm_devices] [    INFO] Response from 'CH1:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.706323] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.708321] [tm_devices] [    INFO] Response from 'CH1:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.708321] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.710319] [tm_devices] [    INFO] Response from 'CH1:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.711320] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBETYPE?'
+[2025-11-24 15:44:41.713318] [tm_devices] [    INFO] Response from 'CH2:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.713318] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.715317] [tm_devices] [    INFO] Response from 'CH2:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.715317] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.717316] [tm_devices] [    INFO] Response from 'CH2:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.718316] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBETYPE?'
+[2025-11-24 15:44:41.719315] [tm_devices] [    INFO] Response from 'CH3:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.720315] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.721314] [tm_devices] [    INFO] Response from 'CH3:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.722314] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.724312] [tm_devices] [    INFO] Response from 'CH3:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.724312] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBETYPE?'
+[2025-11-24 15:44:41.725313] [tm_devices] [    INFO] Response from 'CH4:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.726311] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.728309] [tm_devices] [    INFO] Response from 'CH4:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.728309] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.730308] [tm_devices] [    INFO] Response from 'CH4:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.730308] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBETYPE?'
+[2025-11-24 15:44:41.732307] [tm_devices] [    INFO] Response from 'CH5:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.732307] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.734306] [tm_devices] [    INFO] Response from 'CH5:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.734306] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.736305] [tm_devices] [    INFO] Response from 'CH5:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.736305] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBETYPE?'
+[2025-11-24 15:44:41.738304] [tm_devices] [    INFO] Response from 'CH6:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.738304] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.740302] [tm_devices] [    INFO] Response from 'CH6:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.740302] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.742301] [tm_devices] [    INFO] Response from 'CH6:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.742301] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBETYPE?'
+[2025-11-24 15:44:41.744300] [tm_devices] [    INFO] Response from 'CH7:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.745301] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.746299] [tm_devices] [    INFO] Response from 'CH7:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.747299] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.748297] [tm_devices] [    INFO] Response from 'CH7:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.749298] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBETYPE?'
+[2025-11-24 15:44:41.750296] [tm_devices] [    INFO] Response from 'CH8:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 15:44:41.751296] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBE:ID:SERNUMBER?'
+[2025-11-24 15:44:41.753294] [tm_devices] [    INFO] Response from 'CH8:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 15:44:41.753294] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBE:ID:TYPE?'
+[2025-11-24 15:44:41.755294] [tm_devices] [    INFO] Response from 'CH8:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 15:44:41.755294] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':VERBose 1'
+[2025-11-24 15:44:41.756315] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 15:44:41.760313] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 15:44:41.761290] [tm_devices] [   DEBUG] SCOPE 1 "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 15:44:41.761290] [tm_devices] [CRITICAL] 'int' object has no attribute 'split'
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 41, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo1.py", line 17, in main
+    scope.turn_channel_on(1)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\drivers\scopes\tekscope\tekscope.py", line 473, in turn_channel_on
+    self._set_channel_display_state(channel_str, True)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\drivers\scopes\tekscope\tekscope.py", line 772, in _set_channel_display_state
+    (channel_str_base := channel_str.split("_", maxsplit=1)[0])
+                         ^^^^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'split'

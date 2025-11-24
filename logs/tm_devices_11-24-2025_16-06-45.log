@@ -1,0 +1,106 @@
+[2025-11-24 16:06:45.877880] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-11-24 16:06:45.881878] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-11-24 16:06:45.882876] [tm_devices] [    INFO] Opening DeviceManager
+[2025-11-24 16:06:45.883850] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-11-24 16:06:45.912899] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 16:06:45.912899] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-11-24 16:06:45.914873] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 16:06:45.916897] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 16:06:45.917896] [tm_devices] [   DEBUG] SCOPE 1 "SCOPE1" VISA timeout set to: 500.000ms
+[2025-11-24 16:06:45.918896] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 16:06:45.919897] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 16:06:45.920870] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':VERBose 1'
+[2025-11-24 16:06:45.921865] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 16:06:45.922895] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 16:06:45.923866] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-11-24 16:06:45.924865] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-11-24 16:06:45.925864] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBETYPE?'
+[2025-11-24 16:06:45.926863] [tm_devices] [    INFO] Response from 'CH1:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.926863] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.928861] [tm_devices] [    INFO] Response from 'CH1:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.928861] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH1:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.930890] [tm_devices] [    INFO] Response from 'CH1:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.930890] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBETYPE?'
+[2025-11-24 16:06:45.932890] [tm_devices] [    INFO] Response from 'CH2:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.932890] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.934860] [tm_devices] [    INFO] Response from 'CH2:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.934860] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH2:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.936885] [tm_devices] [    INFO] Response from 'CH2:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.936885] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBETYPE?'
+[2025-11-24 16:06:45.937858] [tm_devices] [    INFO] Response from 'CH3:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.938876] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.939886] [tm_devices] [    INFO] Response from 'CH3:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.940857] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH3:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.941856] [tm_devices] [    INFO] Response from 'CH3:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.941856] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBETYPE?'
+[2025-11-24 16:06:45.943882] [tm_devices] [    INFO] Response from 'CH4:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.943882] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.944852] [tm_devices] [    INFO] Response from 'CH4:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.945852] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH4:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.946881] [tm_devices] [    INFO] Response from 'CH4:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.947852] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBETYPE?'
+[2025-11-24 16:06:45.948852] [tm_devices] [    INFO] Response from 'CH5:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.948852] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.950869] [tm_devices] [    INFO] Response from 'CH5:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.950869] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH5:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.951848] [tm_devices] [    INFO] Response from 'CH5:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.952876] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBETYPE?'
+[2025-11-24 16:06:45.953848] [tm_devices] [    INFO] Response from 'CH6:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.954867] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.955846] [tm_devices] [    INFO] Response from 'CH6:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.955846] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH6:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.957866] [tm_devices] [    INFO] Response from 'CH6:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.957866] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBETYPE?'
+[2025-11-24 16:06:45.958844] [tm_devices] [    INFO] Response from 'CH7:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.958844] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.960316] [tm_devices] [    INFO] Response from 'CH7:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.961302] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH7:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.962301] [tm_devices] [    INFO] Response from 'CH7:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.963283] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBETYPE?'
+[2025-11-24 16:06:45.964285] [tm_devices] [    INFO] Response from 'CH8:PROBETYPE?' >>  'ANALOG'
+[2025-11-24 16:06:45.965309] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBE:ID:SERNUMBER?'
+[2025-11-24 16:06:45.966297] [tm_devices] [    INFO] Response from 'CH8:PROBE:ID:SERNUMBER?' >>  'N/A'
+[2025-11-24 16:06:45.967277] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'CH8:PROBE:ID:TYPE?'
+[2025-11-24 16:06:45.968277] [tm_devices] [    INFO] Response from 'CH8:PROBE:ID:TYPE?' >>  '1X'
+[2025-11-24 16:06:45.968277] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':VERBose 1'
+[2025-11-24 16:06:45.969276] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':VERBose?'
+[2025-11-24 16:06:45.970275] [tm_devices] [    INFO] Response from ':VERBose?' >>  '1'
+[2025-11-24 16:06:45.971275] [tm_devices] [   DEBUG] SCOPE 1 "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-11-24 16:06:45.971275] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':DISPLAY:WAVEVIEW:CH1:STATE 1'
+[2025-11-24 16:06:45.972295] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DISPLAY:WAVEVIEW:CH1:STATE?'
+[2025-11-24 16:06:45.973294] [tm_devices] [    INFO] Response from ':DISPLAY:WAVEVIEW:CH1:STATE?' >>  '1'
+[2025-11-24 16:06:45.973294] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'AUTOSet EXECute'
+[2025-11-24 16:06:47.183028] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DATA:SOURCE:AVAIL?'
+[2025-11-24 16:06:47.187025] [tm_devices] [    INFO] Response from ':DATA:SOURCE:AVAIL?' >>  'CH1,CH7,CH8'
+[2025-11-24 16:06:47.188024] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-11-24 16:06:47.189024] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:ENC RIBINARY'
+[2025-11-24 16:06:47.190023] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DATA:SOURCE:AVAIL?'
+[2025-11-24 16:06:47.192022] [tm_devices] [    INFO] Response from ':DATA:SOURCE:AVAIL?' >>  'CH1,CH7,CH8'
+[2025-11-24 16:06:47.192022] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-11-24 16:06:47.194021] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'DATA:SOURCE?'
+[2025-11-24 16:06:47.196020] [tm_devices] [    INFO] Response from 'DATA:SOURCE?' >>  'CH1'
+[2025-11-24 16:06:47.196020] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  ':DATA:ENC ASCII'
+[2025-11-24 16:06:47.198019] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  ':DATA:ENC?'
+[2025-11-24 16:06:47.200036] [tm_devices] [    INFO] Response from ':DATA:ENC?' >>  'RIBINARY'
+[2025-11-24 16:06:47.200036] [tm_devices] [CRITICAL] ERROR: (SCOPE 1 "SCOPE1") : Failed to set :DATA:ENC to ASCII, Actual result does not match the expected result, exp: ASCII, act: RIBINARY
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo2-bodeplot.py", line 129, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo2-bodeplot.py", line 99, in main
+    amp, phase = measure_peak_phase(tek.scope, ch=1, freq_hz=f)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\s250127\RI_Batbal_Testbench\examples\demo2-bodeplot.py", line 29, in measure_peak_phase
+    y, x0, dx = scope.curve_query(ch)
+                ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\drivers\scopes\tekscope\tekscope.py", line 391, in curve_query
+    self.set_and_check(":DATA:ENC", "ASCII")
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 735, in set_and_check
+    verify_values(
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 104, in verify_values
+    raise_error(unique_identifier, message, condense_printout=condense_printout)
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\helpers\verification_functions.py", line 23, in raise_error
+    raise AssertionError(message)
+AssertionError: ERROR: (SCOPE 1 "SCOPE1") : Failed to set :DATA:ENC to ASCII, Actual result does not match the expected result, exp: ASCII, act: RIBINARY
