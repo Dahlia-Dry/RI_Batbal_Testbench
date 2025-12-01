@@ -1,0 +1,120 @@
+[2025-12-01 14:43:20.174499] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-12-01 14:43:20.174499] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-12-01 14:43:20.174499] [tm_devices] [    INFO] Opening DeviceManager
+[2025-12-01 14:43:20.174499] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-12-01 14:43:20.251891] [tm_devices] [ WARNING] 
+The device `TCPIP0::10.59.31.94::inst0::INSTR` had data sitting in the VISA Output Buffer on first connection. 
+Detected data in the buffer via the Status Byte register. 
+The device_clear() will be called so VISA I/O buffers get flushed.
+[2025-12-01 14:43:20.258360] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-12-01 14:43:20.258360] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-12-01 14:43:20.258360] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:43:20.258360] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGger:A:TYPe EDGE'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:LEVEL 0.5'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:EDGE:SOURCE CH1'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:SCAle 0.2'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:POSition 0.2'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:MODe SAMPLE'
+[2025-12-01 14:43:20.268535] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STOPAfter SEQUENCE'
+[2025-12-01 14:43:20.275802] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MODE MANUAL'
+[2025-12-01 14:43:20.276803] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MAIN:SCALE 0.001'
+[2025-12-01 14:43:20.276803] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STATE RUN'
+[2025-12-01 14:43:20.277802] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.296133] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.347179] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.348191] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.400317] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.401823] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.452657] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.454192] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.505262] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.505262] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.560794] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.560794] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.613603] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.613603] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.672091] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.673333] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.724800] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.726310] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.778045] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.779259] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.831470] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.832454] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.889379] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.891222] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:20.947225] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:20.947225] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.000294] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.001799] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.052833] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.052833] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.106101] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.107673] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.159381] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.159381] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.212692] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.213871] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.265344] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.265344] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.318527] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.320531] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.371670] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.372679] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.424436] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.426464] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.477646] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.478659] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.538622] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.540449] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.591427] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.593163] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.649709] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.652123] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.703155] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.703155] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.755308] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.755308] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.807965] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.809969] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:43:21.860913] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:43:21.860913] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '0'
+[2025-12-01 14:43:21.864441] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-12-01 14:43:21.864441] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:ENC RIBINARY'
+[2025-12-01 14:43:21.868642] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:WIDTH 1'
+[2025-12-01 14:43:21.869652] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+[2025-12-01 14:43:21.882123] [tm_devices] [    INFO] Response from 'WFMPRE:YMULT?' >>  '200.0000E-3'
+[2025-12-01 14:43:21.882123] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YOFF?'
+[2025-12-01 14:43:21.892872] [tm_devices] [    INFO] Response from 'WFMPRE:YOFF?' >>  '0.0E+0'
+[2025-12-01 14:43:21.892872] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YZERO?'
+[2025-12-01 14:43:21.905693] [tm_devices] [    INFO] Response from 'WFMPRE:YZERO?' >>  '0.0E+0'
+[2025-12-01 14:43:21.905693] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:XINCR?'
+[2025-12-01 14:43:21.909564] [tm_devices] [    INFO] Response from 'WFMPRE:XINCR?' >>  '160.00E-12'
+[2025-12-01 14:43:21.910525] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CURVE?'
+[2025-12-01 14:43:28.851986] [tm_devices] [CRITICAL] plot() got an unexpected keyword argument 'x'
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 118, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 114, in main
+    run_test(args.yaml_file)
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 80, in run_test
+    execute_step(step, inst)
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\step_dispatcher.py", line 31, in execute_step
+    inst.capture(
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\tektronix_mso58.py", line 145, in capture
+    plt.plot(x=datafile["t"],y=datafile["data_ch1"])
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\matplotlib\pyplot.py", line 3838, in plot
+    return gca().plot(
+           ^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\matplotlib\axes\_axes.py", line 1777, in plot
+    lines = [*self._get_lines(self, *args, data=data, **kwargs)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\matplotlib\axes\_base.py", line 232, in __call__
+    raise _api.kwarg_error(inspect.stack()[1].function, pos_only)
+TypeError: plot() got an unexpected keyword argument 'x'

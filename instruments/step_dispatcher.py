@@ -22,7 +22,7 @@ def execute_step(step, inst):
         )
 
     elif action == "setup_scope":
-        inst.setup(
+        inst.setup_scope(
             trigger=step["trigger"],
             channels=step["channels"]
         )
@@ -31,6 +31,12 @@ def execute_step(step, inst):
         inst.capture(
             channels=step["channels"],
             duration=step["duration"],
+            save_to=step["save_to"],
+            show_plot=True
+        )
+    
+    elif action == "screenshot":
+        inst.screenshot(
             save_to=step["save_to"]
         )
 

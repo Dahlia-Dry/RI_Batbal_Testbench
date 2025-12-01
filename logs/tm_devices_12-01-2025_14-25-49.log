@@ -1,0 +1,67 @@
+[2025-12-01 14:25:49.850497] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-12-01 14:25:49.853495] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-12-01 14:25:49.853495] [tm_devices] [    INFO] Opening DeviceManager
+[2025-12-01 14:25:49.853495] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-12-01 14:25:49.924427] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-12-01 14:25:49.924427] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-12-01 14:25:49.924427] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:25:49.924427] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:25:49.936146] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGger:A:TYPe EDGE'
+[2025-12-01 14:25:49.936146] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:LEVEL 0.5'
+[2025-12-01 14:25:49.941486] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:EDGE:SOURCE CH1'
+[2025-12-01 14:25:49.941926] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:25:49.943926] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:25:49.943926] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:SCAle 0.2'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:POSition 0.2'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:MODe SAMPLE'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STOPAfter SEQUENCE'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MODE MANUAL'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MAIN:SCALE 0.001'
+[2025-12-01 14:25:49.945014] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*OPC?'
+[2025-12-01 14:25:54.944574] [tm_devices] [   ERROR] The query of SCOPE 1 "SCOPE1" for '*OPC?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+[2025-12-01 14:25:54.944574] [tm_devices] [CRITICAL] The query of SCOPE 1 "SCOPE1" for '*OPC?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 363, in query
+    response = self._visa_resource.query(query).strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 690, in query
+    return self.read()
+           ^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 519, in read
+    message = self._read_raw().decode(enco)
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 473, in _read_raw
+    chunk, status = self.visalib.read(self.session, size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2339, in read
+    ret = library.viRead(session, buffer, count, byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 227, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\highlevel.py", line 252, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 118, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 114, in main
+    run_test(args.yaml_file)
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 80, in run_test
+    execute_step(step, inst)
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\step_dispatcher.py", line 31, in execute_step
+    inst.capture(
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\tektronix_mso58.py", line 99, in capture
+    self.scope.commands.opc.query()
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\commands\helpers\scpi_commands.py", line 60, in query
+    return self._device.query(self._cmd_syntax + "?")  # type: ignore[union-attr]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 373, in query
+    raise visa.Error(msg) from error
+pyvisa.errors.Error: The query of SCOPE 1 "SCOPE1" for '*OPC?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')

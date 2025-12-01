@@ -4,6 +4,7 @@ from instruments.tekscope_connection import preclean_visa_buffer
 import numpy as np
 import time
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class TekMSO58:
     supported_actions = ["setup_scope", "capture", "screenshot"]
@@ -63,11 +64,12 @@ class TekMSO58:
         trig_level = trigger.get("level", 1.0)
 
         # Example SCPI for Tektronix MSO5/MSO6
+        #print(dir(self.scope.commands.trigger))
         self.scope.commands.trigger.a.type.write(trig_type)
-        self.scope.commands.trigger.a.level.write(trig_level)
-        self.scope.commands.trigger.a.source.write(trig_source)
-        #self.write(f"TRIGGER:A:LEVEL {trig_level}")
-        #self.write(f"TRIGGER:A:EDGE:SOURCE {trig_source}")
+        #self.scope.commands.trigger.level.write(trig_level)
+        #self.scope.commands.trigger.source.write(trig_source)
+        self.write(f"TRIGGER:A:LEVEL {trig_level}")
+        self.write(f"TRIGGER:A:EDGE:SOURCE {trig_source}")
 
         # Channel settings
         for ch, cfg in channels.items():
@@ -83,42 +85,70 @@ class TekMSO58:
     # Waveform Acquisition
     # Uses curve_query() — VERIFIED in repo
     # ------------------------------
-    def capture(self, channels, duration, save_to=None, sample_rate=None):
+    def capture(self, channels, duration, save_to=None, sample_rate=None, show_plot=False):
         #self.scope.commands.acquire.state.write("OFF")
         self.scope.commands.acquire.mode.write("SAMPLE")
         self.scope.commands.acquire.stopafter.write("SEQUENCE")
 
-        self.scope.commands.horizontal.mode.write("MANUAL")
-        self.scope.commands.horizontal.main_scale.write(duration / 10)
+        self.write("HOR:MODE MANUAL")
+        self.write(f"HOR:MAIN:SCALE {duration / 10}")
 
         if sample_rate:
             record_length = int(duration * sample_rate)
-            self.scope.commands.horizontal.record_length.write(record_length)
+            self.write(f"HORIZONTAL:RECORDLENGTH {record_length}")
         
         self.scope.commands.acquire.state.write("RUN")
 
         # Give the scope enough time to acquire
-        self.scope.opc()
+        # Wait until acquisition stops (e.g., in SEQUENCE mode)
+        while int(self.scope.commands.acquire.state.query()) != 0:
+            time.sleep(0.5)
+
+        curve_returned = self.scope.curve_query(1, output_csv_file="test.csv")
 
         datafile = pd.DataFrame()
 
         for ch in channels:
-            data = self.scope.commands.curve.query(channel=ch)
-            datafile[f"CH{ch}"] = data
-            num_pts = len(datafile[f"CH{ch}"])
-        
-        preamble = self.scope.commands.data.preamble.query()
-        dt = preamble.x_increment
-        t0 = preamble.x_origin
+            # --- Configure binary waveform transfer ---
+            self.write(f"DATA:SOURCE CH{ch}")
+            self.write("DATA:ENC RIBINARY")
+            self.write("DATA:WIDTH 1")   # 1 byte per sample
 
-        # Build your time vector
-        time = [t0 + i*dt for i in range(num_pts)]
+            ymult = float(self.query("WFMPRE:YMULT?"))
+            yoff  = float(self.query("WFMPRE:YOFF?"))
+            yzero = float(self.query("WFMPRE:YZERO?"))
+            xincr = float(self.query("WFMPRE:XINCR?"))
 
-        datafile.insert(0, "Time_s", time)
+            # --- Trigger data transfer ---
+            self.write("CURVE?")
+
+            raw = self.scope.read_raw()
+
+            # --- Parse definite-length block ---
+            # Format: #<n><len><binary data>
+            assert raw[0:1] == b"#"
+            n_digits = int(raw[1:2])
+            n_bytes  = int(raw[2:2+n_digits])
+            data_start = 2 + n_digits
+            data_end   = data_start + n_bytes
+
+            data_raw = raw[data_start:data_end]
+
+            samples = np.frombuffer(data_raw, dtype=np.int8)
+
+            data_offset = (samples - yoff) * ymult + yzero
+            datafile["t"] = np.arange(len(data_offset)) * xincr
+            datafile[f"data_ch{ch}"] = data_offset
+
+
 
         if save_to is not None:
             datafile.to_csv(save_to)
 
+        if show_plot:
+            #fig=plt.figure()
+            plt.scatter(x=datafile["t"],y=datafile["data_ch1"])
+            plt.show()
         return datafile 
 
 
@@ -191,20 +221,14 @@ class TekMSO58:
         """
         Saves screenshot locally using tm_devices built-in functionality.
         """
-        import tempfile, os
-        local_dir = tempfile.mkdtemp()
 
         self.scope.save_screenshot(
             save_to,
             colors="INVERTED",
-            local_folder=local_dir,
-            device_folder="temp",
             keep_device_file=False,
         )
 
-        file_path = os.path.join(local_dir, save_to)
-        print("Saved screenshot to:", file_path)
-        return file_path
+        return
 
     # ------------------------------
     # Cleanup

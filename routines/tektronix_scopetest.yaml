@@ -10,13 +10,13 @@ sequence:
       source: CH1
       level: 0.5
     channels:
-      CH1: {scale: 0.2, position: 0}
+      CH1: {scale: 1, position: 0}
 
   - action: capture
     instrument: tektronix_mso58
-    channels: ["CH1"]
-    duration: 0.01          # 10 ms
-    sample_rate: 2000000    # 2 MHz (~20k samples)
+    channels: [1]
+    duration: 20          # 100 ms
+    sample_rate:
     save_to: "capture.csv"
 
   - action: screenshot

@@ -1,0 +1,39 @@
+[2025-12-01 14:27:25.198715] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-12-01 14:27:25.198715] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-12-01 14:27:25.198715] [tm_devices] [    INFO] Opening DeviceManager
+[2025-12-01 14:27:25.198715] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-12-01 14:27:25.291446] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-12-01 14:27:25.291446] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-12-01 14:27:25.291446] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:27:25.291446] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:27:25.301445] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGger:A:TYPe EDGE'
+[2025-12-01 14:27:25.301445] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:LEVEL 0.5'
+[2025-12-01 14:27:25.303055] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:EDGE:SOURCE CH1'
+[2025-12-01 14:27:25.304054] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 14:27:25.306054] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 14:27:25.306557] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:SCAle 0.2'
+[2025-12-01 14:27:25.307053] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:POSition 0.2'
+[2025-12-01 14:27:25.308512] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:MODe SAMPLE'
+[2025-12-01 14:27:25.308512] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STOPAfter SEQUENCE'
+[2025-12-01 14:27:25.308512] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MODE MANUAL'
+[2025-12-01 14:27:25.308512] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MAIN:SCALE 0.001'
+[2025-12-01 14:27:25.308512] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STATE RUN'
+[2025-12-01 14:27:25.312841] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQuire:STATE?'
+[2025-12-01 14:27:25.330322] [tm_devices] [    INFO] Response from 'ACQuire:STATE?' >>  '1'
+[2025-12-01 14:27:25.330322] [tm_devices] [CRITICAL] cannot access local variable 'time' where it is not associated with a value
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 118, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 114, in main
+    run_test(args.yaml_file)
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 80, in run_test
+    execute_step(step, inst)
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\step_dispatcher.py", line 31, in execute_step
+    inst.capture(
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\tektronix_mso58.py", line 104, in capture
+    time.sleep(0.05)
+    ^^^^
+UnboundLocalError: cannot access local variable 'time' where it is not associated with a value
