@@ -1,0 +1,24 @@
+instruments:
+  tektronix_mso58:
+    ip: "10.59.31.94"
+
+sequence:
+  - action: setup_scope
+    instrument: tektronix_mso58
+    trigger:
+      type: edge
+      source: CH1
+      level: 0.5
+    channels:
+      CH1: {scale: 0.2, position: 0}
+
+  - action: capture
+    instrument: tektronix_mso58
+    channels: ["CH1"]
+    duration: 0.01          # 10 ms
+    sample_rate: 2000000    # 2 MHz (~20k samples)
+    save_to: "capture.csv"
+
+  - action: screenshot
+    instrument: tektronix_mso58
+    save_to: "screen.png"

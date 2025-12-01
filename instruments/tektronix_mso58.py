@@ -1,9 +1,12 @@
 # tektronix_mso58.py
 from tm_devices import DeviceManager
 from instruments.tekscope_connection import preclean_visa_buffer
+import numpy as np
+import time
+import pandas as pd
 
 class TekMSO58:
-    supported_actions = ["setup_scope", "capture"]
+    supported_actions = ["setup_scope", "capture", "screenshot"]
     """
     Very thin wrapper around tm_devices MSO5 driver.
     Only uses APIs confirmed from GitHub:
@@ -44,62 +47,147 @@ class TekMSO58:
     # Channel controls
     # ------------------------------
     def channel_on(self, ch):
-        self.scope.write(f"SELECT:CH{ch} ON")
+        self.scope.commands.display.waveview1.ch[ch].state.write("ON")
 
     def channel_off(self, ch):
-        self.scope.write(f"SELECT:CH{ch} OFF")
+        self.scope.commands.display.waveview1.ch[ch].state.write("OFF")
 
     # ------------------------------
-    # Autoset
+    # Manual setup
     # ------------------------------
-    def autoset(self):
-        self.scope.write("AUTOSet EXECute")
+
+    def setup_scope(self, trigger, channels):
+        # Trigger
+        trig_type = trigger.get("type", "edge").upper()
+        trig_source = trigger.get("source", "CH1")
+        trig_level = trigger.get("level", 1.0)
+
+        # Example SCPI for Tektronix MSO5/MSO6
+        self.scope.commands.trigger.a.type.write(trig_type)
+        self.scope.commands.trigger.a.level.write(trig_level)
+        self.scope.commands.trigger.a.source.write(trig_source)
+        #self.write(f"TRIGGER:A:LEVEL {trig_level}")
+        #self.write(f"TRIGGER:A:EDGE:SOURCE {trig_source}")
+
+        # Channel settings
+        for ch, cfg in channels.items():
+            scale = cfg.get("scale", None)
+            position = cfg.get("position", None)
+
+            if scale is not None:
+                self.scope.commands.ch[ch].scale.write(scale)
+            if position is not None:
+                self.scope.commands.ch[ch].position.write(scale)
 
     # ------------------------------
     # Waveform Acquisition
     # Uses curve_query() — VERIFIED in repo
     # ------------------------------
-    def acquire_waveform(self, ch):
-        s = self.scope
+    def capture(self, channels, duration, save_to=None, sample_rate=None):
+        #self.scope.commands.acquire.state.write("OFF")
+        self.scope.commands.acquire.mode.write("SAMPLE")
+        self.scope.commands.acquire.stopafter.write("SEQUENCE")
 
-        # --- Configure binary waveform transfer ---
-        s.write(f"DATA:SOURCE CH{ch}")
-        s.write("DATA:ENC RIBINARY")
-        s.write("DATA:WIDTH 1")   # 1 byte per sample
+        self.scope.commands.horizontal.mode.write("MANUAL")
+        self.scope.commands.horizontal.main_scale.write(duration / 10)
 
-        ymult = float(s.query("WFMPRE:YMULT?"))
-        yoff  = float(s.query("WFMPRE:YOFF?"))
-        yzero = float(s.query("WFMPRE:YZERO?"))
-        xincr = float(s.query("WFMPRE:XINCR?"))
+        if sample_rate:
+            record_length = int(duration * sample_rate)
+            self.scope.commands.horizontal.record_length.write(record_length)
+        
+        self.scope.commands.acquire.state.write("RUN")
 
-        # --- Trigger data transfer ---
-        s.write("CURVE?")
+        # Give the scope enough time to acquire
+        self.scope.opc()
 
-        raw = s.read_raw()
+        datafile = pd.DataFrame()
 
-        # --- Parse definite-length block ---
-        # Format: #<n><len><binary data>
-        assert raw[0:1] == b"#"
-        n_digits = int(raw[1:2])
-        n_bytes  = int(raw[2:2+n_digits])
-        data_start = 2 + n_digits
-        data_end   = data_start + n_bytes
+        for ch in channels:
+            data = self.scope.commands.curve.query(channel=ch)
+            datafile[f"CH{ch}"] = data
+            num_pts = len(datafile[f"CH{ch}"])
+        
+        preamble = self.scope.commands.data.preamble.query()
+        dt = preamble.x_increment
+        t0 = preamble.x_origin
 
-        data = raw[data_start:data_end]
+        # Build your time vector
+        time = [t0 + i*dt for i in range(num_pts)]
 
-        import numpy as np
-        samples = np.frombuffer(data, dtype=np.int8)
+        datafile.insert(0, "Time_s", time)
 
-        volts = (samples - yoff) * ymult + yzero
-        t = np.arange(len(volts)) * xincr
+        if save_to is not None:
+            datafile.to_csv(save_to)
 
-        return t, volts
+        return datafile 
+
+
+        
+    def record_to_csv_binary(self, channels, duration, output_file=False, sample_rate=None):
+        # 1. Timebase settings so the duration fits the screen (10 divisions)
+        self.write("HOR:MODE MANUAL")
+        self.write(f"HOR:MAIN:SCALE {duration / 10}")
+
+        # 2. Configure record length
+        if sample_rate:
+            record_length = int(duration * sample_rate)
+            self.write(f"HORIZONTAL:RECORDLENGTH {record_length}")
+        # else: auto-select record length
+
+        # 3. Run a single sequence acquisition
+        self.write("ACQUIRE:STOPAFTER SEQUENCE")
+        self.write("ACQUIRE:STATE RUN")
+
+        # Give the scope enough time to acquire
+        time.sleep(duration * 1.2)
+
+        # Stop acquisition before reading
+        self.write("ACQUIRE:STATE STOP")
+
+        datafile = pd.DataFrame()
+
+        for ch in channels:
+            # --- Configure binary waveform transfer ---
+            self.write(f"DATA:SOURCE CH{ch}")
+            self.write("DATA:ENC RIBINARY")
+            self.write("DATA:WIDTH 1")   # 1 byte per sample
+
+            ymult = float(self.query("WFMPRE:YMULT?"))
+            yoff  = float(self.query("WFMPRE:YOFF?"))
+            yzero = float(self.query("WFMPRE:YZERO?"))
+            xincr = float(self.query("WFMPRE:XINCR?"))
+
+            # --- Trigger data transfer ---
+            self.write("CURVE?")
+
+            raw = self.scope.read_raw()
+
+            # --- Parse definite-length block ---
+            # Format: #<n><len><binary data>
+            assert raw[0:1] == b"#"
+            n_digits = int(raw[1:2])
+            n_bytes  = int(raw[2:2+n_digits])
+            data_start = 2 + n_digits
+            data_end   = data_start + n_bytes
+
+            data_raw = raw[data_start:data_end]
+
+            samples = np.frombuffer(data_raw, dtype=np.int8)
+
+            data_offset = (samples - yoff) * ymult + yzero
+            datafile["t"] = np.arange(len(data_offset)) * xincr
+            datafile[f"data_ch{ch}"] = data_offset
+
+        if output_file is not None:
+            datafile.to_csv(output_file)
+
+        return datafile 
 
 
     # ------------------------------
     # Screenshot (uses official save_screenshot API)
     # ------------------------------
-    def screenshot(self, filename="scope.png"):
+    def screenshot(self, save_to="scope.png"):
         """
         Saves screenshot locally using tm_devices built-in functionality.
         """
@@ -107,14 +195,14 @@ class TekMSO58:
         local_dir = tempfile.mkdtemp()
 
         self.scope.save_screenshot(
-            filename,
+            save_to,
             colors="INVERTED",
             local_folder=local_dir,
             device_folder="temp",
             keep_device_file=False,
         )
 
-        file_path = os.path.join(local_dir, filename)
+        file_path = os.path.join(local_dir, save_to)
         print("Saved screenshot to:", file_path)
         return file_path
 
