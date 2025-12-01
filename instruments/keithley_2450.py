@@ -1,11 +1,5 @@
-# Source Meter Unit (SMU)
-import pyvisa
 
-def test():
+from instruments.instrument_base import Instrument
 
-    rm = pyvisa.ResourceManager()
-
-    smu = rm.open_resource("TCPIP::10.59.133.251::inst0::INSTR")
-    print(smu.query("*IDN?"))
-
-test()
+class Keithley2450(Instrument):
+    pass

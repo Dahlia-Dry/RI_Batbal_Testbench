@@ -1,7 +1,9 @@
 # rigol_dg1062z.py
 import pyvisa
+from instruments.instrument_base import Instrument
 
 class RigolDG1062Z(Instrument):
+    supported_actions = ["start_waveform"]
     # -------------------------------
     # Waveform configuration
     # -------------------------------

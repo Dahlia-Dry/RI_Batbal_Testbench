@@ -1,7 +1,9 @@
 # tektronix_mso58.py
 from tm_devices import DeviceManager
-from .tekscope_connection import preclean_visa_buffer
+from instruments.tekscope_connection import preclean_visa_buffer
+
 class TekMSO58:
+    supported_actions = ["setup_scope", "capture"]
     """
     Very thin wrapper around tm_devices MSO5 driver.
     Only uses APIs confirmed from GitHub:
@@ -27,7 +29,7 @@ class TekMSO58:
         self.dm = DeviceManager()
         self.scope = self.dm.add_scope(self.address, alias=self.alias)
 
-        print("Connected:", self.scope.query("*IDN?"))
+        return self.scope.query("*IDN?")
 
     # ------------------------------
     # Basic SCPI passthrough

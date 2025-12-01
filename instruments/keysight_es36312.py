@@ -1,6 +1,7 @@
-from instrument_base import Instrument
+from instruments.instrument_base import Instrument
 
 class KeysightE36312(Instrument):
+    supported_actions = ["set_power"]
 
     # -------------
     # Channel control

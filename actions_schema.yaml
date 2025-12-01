@@ -1,0 +1,84 @@
+actions:
+
+  set_power:
+    description: Set power supply channel voltage and current limit.
+    instruments: ["keysight_e36312"]
+    parameters:
+      channel:
+        type: int
+        required: true
+      voltage:
+        type: float
+        required: true
+      current_limit:
+        type: float
+        required: true
+      ramp_time:
+        type: float
+        required: false
+        default: 0.0
+
+  start_waveform:
+    description: Configure and enable a waveform on a function generator.
+    instruments: ["rigol_dg1062z"]
+    parameters:
+      channel:
+        type: int
+        required: true
+      waveform:
+        type: dict
+        required: true
+        properties:
+          type:
+            type: string
+            enum: ["sine", "square", "ramp"]
+          frequency:
+            type: float
+          amplitude:
+            type: float
+          offset:
+            type: float
+            default: 0.0
+      output:
+        type: dict
+        required: false
+        properties:
+          impedance:
+            type: string
+            enum: ["50ohm", "highz"]
+          enabled:
+            type: bool
+            default: true
+
+  setup_scope:
+    description: Configure oscilloscope trigger and channel settings.
+    instruments: ["tektronix_mso58"]
+    parameters:
+      trigger:
+        type: dict
+        required: true
+        properties:
+          type:
+            type: string
+            enum: ["edge"]
+          level:
+            type: float
+          source:
+            type: string
+      channels:
+        type: dict
+        required: true
+
+  capture:
+    description: Capture waveform from oscilloscope and save to CSV.
+    instruments: ["tektronix_mso58"]
+    parameters:
+      channels:
+        type: list
+        required: true
+      duration:
+        type: float
+        required: true
+      save_to:
+        type: string
+        required: true

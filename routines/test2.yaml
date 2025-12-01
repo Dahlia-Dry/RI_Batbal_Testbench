@@ -1,0 +1,46 @@
+instruments:
+  keysight_e36312:
+    ip: "10.59.31.173"
+
+  rigol_dg1062z:
+    ip: "10.59.31.166"
+
+  tektronix_mso58:
+    ip: "10.59.31.94"
+
+  keithley_2450:
+    ip: "10.59.31.190"
+    
+sequence:
+  - action: set_power
+    instrument: keysight_e36312
+    channel: 1
+    voltage: 5.0
+    current_limit: 0.01
+    ramp_time: 0.1     # seconds
+    delay_after: 1.0   # wait before next step
+
+  - action: start_waveform
+    instrument: rigol_dg1062z
+    channel: 1
+    waveform:
+      type: sine
+      freq: 1e6
+      amplitude: 2.0
+      offset: 0.0
+    output:
+      impedance: "50ohm"
+      enabled: true
+
+  - action: setup_scope
+    instrument: tektronix_mso58
+    trigger:
+      type: edge
+      level: 1.0
+      source: CH1
+
+  - action: capture
+    instrument: tektronix_mso58
+    channels: [CH1, CH2]
+    duration: 1.0
+    save_to: "capture.csv"
