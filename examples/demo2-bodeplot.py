@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 
-from instrument_interface.rigol_dg1062z import RigolDG1062Z
-from instrument_interface.tektronix_mso58 import TekMSO58
+from instruments.rigol_dg1062z import RigolDG1062Z
+from instruments.tektronix_mso58 import TekMSO58
 
 
 # ---------------------------------------------------------

@@ -4,7 +4,7 @@ import sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, project_root)
 import matplotlib.pyplot as plt
-from instrument_interface.tektronix_mso58 import TekMSO58
+from instruments.tektronix_mso58 import TekMSO58
 
 def main():
 
