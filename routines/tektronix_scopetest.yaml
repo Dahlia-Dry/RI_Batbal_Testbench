@@ -15,7 +15,7 @@ sequence:
   - action: capture
     instrument: tektronix_mso58
     channels: [1]
-    duration: 20          # 100 ms
+    duration: 2e-5          
     sample_rate:
     save_to: "capture.csv"
 

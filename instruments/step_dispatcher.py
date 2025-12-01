@@ -7,7 +7,7 @@ def execute_step(step, inst):
     action = step["action"]
 
     if action == "set_power":
-        inst.set_channel(
+        inst.set_power(
             ch=step["channel"],
             voltage=step["voltage"],
             current_limit=step["current_limit"],
@@ -16,9 +16,9 @@ def execute_step(step, inst):
 
     elif action == "start_waveform":
         inst.start_waveform(
-            ch=step["channel"],
-            wf=step["waveform"],
-            out=step.get("output", {})
+            channel=step["channel"],
+            waveform=step["waveform"],
+            output=step.get("output", {})
         )
 
     elif action == "setup_scope":

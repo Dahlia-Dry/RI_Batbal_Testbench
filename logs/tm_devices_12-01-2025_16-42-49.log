@@ -1,0 +1,180 @@
+[2025-12-01 16:42:49.788585] [tm_devices] [   DEBUG] timezone==Europe/Paris
+[2025-12-01 16:42:49.790616] [tm_devices] [   DEBUG] tm_devices==3.4.0
+[2025-12-01 16:42:49.790616] [tm_devices] [    INFO] Opening DeviceManager
+[2025-12-01 16:42:49.791613] [tm_devices] [    INFO] Creating Connection to SCOPE 1 "SCOPE1"
+[2025-12-01 16:42:49.833585] [tm_devices] [ WARNING] 
+The device `TCPIP0::10.59.31.94::inst0::INSTR` had data sitting in the VISA Output Buffer on first connection. 
+Detected data in the buffer via the Status Byte register. 
+The device_clear() will be called so VISA I/O buffers get flushed.
+[2025-12-01 16:42:49.833585] [tm_devices] [   DEBUG] SCOPE "SCOPE1" VISA timeout set to: 5000.000ms
+[2025-12-01 16:42:49.833585] [tm_devices] [   DEBUG] (SCOPE "SCOPE1") Write >>  'HEADER OFF'
+[2025-12-01 16:42:49.844651] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 16:42:49.844988] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGger:A:TYPe EDGE'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:LEVEL 1.0'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:EDGE:SOURCE CH1'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[2025-12-01 16:42:51.151624] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:SCAle 1'
+[2025-12-01 16:42:51.160135] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH1:POSition 1'
+[2025-12-01 16:42:51.161651] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH2:SCAle 1'
+[2025-12-01 16:42:51.161651] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CHCH2:POSition 1'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STATE OFF'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:MODe SAMPLE'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STOPAfter SEQUENCE'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MODE MANUAL'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'HOR:MAIN:SCALE 1.0'
+[2025-12-01 16:42:51.165231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH1'
+[2025-12-01 16:42:51.175231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:ENC SRIbinary'
+[2025-12-01 16:42:51.175231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:WIDTH 2'
+[2025-12-01 16:42:51.175231] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STOPAfter SEQ'
+[2025-12-01 16:42:51.179095] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE ON'
+[2025-12-01 16:42:51.180092] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.214409] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.315958] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.316959] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.418167] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.419143] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.520057] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.521037] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.622085] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.623078] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.724466] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.725476] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.827190] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.829154] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:51.930026] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:51.932053] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.042653] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.042653] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.154267] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.156416] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.257141] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.257141] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.360144] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.360144] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.463573] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.463573] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.571387] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.572901] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.674487] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.676495] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.784753] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.786243] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.893013] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.895012] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:52.995830] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:52.997774] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.098814] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.100814] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.202243] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.204242] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.304947] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.304947] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '0'
+[2025-12-01 16:42:53.304947] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE OFF'
+[2025-12-01 16:42:53.358286] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+[2025-12-01 16:42:53.392084] [tm_devices] [    INFO] Response from 'WFMPRE:YMULT?' >>  '156.2500E-6'
+[2025-12-01 16:42:53.392084] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YOFF?'
+[2025-12-01 16:42:53.392084] [tm_devices] [    INFO] Response from 'WFMPRE:YOFF?' >>  '0.0E+0'
+[2025-12-01 16:42:53.392084] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YZERO?'
+[2025-12-01 16:42:53.398596] [tm_devices] [    INFO] Response from 'WFMPRE:YZERO?' >>  '0.0E+0'
+[2025-12-01 16:42:53.400734] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:XINCR?'
+[2025-12-01 16:42:53.407851] [tm_devices] [    INFO] Response from 'WFMPRE:XINCR?' >>  '160.00E-12'
+[2025-12-01 16:42:53.407851] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'CURVE?'
+[2025-12-01 16:42:53.641843] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CH2'
+[2025-12-01 16:42:53.648857] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:ENC SRIbinary'
+[2025-12-01 16:42:53.648857] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'DATA:WIDTH 2'
+[2025-12-01 16:42:53.648857] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STOPAfter SEQ'
+[2025-12-01 16:42:53.651946] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE ON'
+[2025-12-01 16:42:53.651946] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.662049] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.766478] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.766478] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.869474] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.871472] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:53.972770] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:53.974747] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.075346] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.077333] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.178567] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.178567] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.287137] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.288397] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.390043] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.392042] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.493318] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.495286] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.596408] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.596408] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.698893] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.699868] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.801522] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.803494] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:54.904210] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:54.906173] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.006755] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.008697] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.109858] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.110814] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.212708] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.214676] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.315607] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.317554] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.418629] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.418629] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.521910] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.523906] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.624556] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.625556] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '1'
+[2025-12-01 16:42:55.727001] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+[2025-12-01 16:42:55.728967] [tm_devices] [    INFO] Response from 'ACQ:STATE?' >>  '0'
+[2025-12-01 16:42:55.728967] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE OFF'
+[2025-12-01 16:42:55.789146] [tm_devices] [    INFO] (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+[2025-12-01 16:43:05.786769] [tm_devices] [   ERROR] The query of SCOPE 1 "SCOPE1" for 'WFMPRE:YMULT?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+[2025-12-01 16:43:05.786769] [tm_devices] [CRITICAL] The query of SCOPE 1 "SCOPE1" for 'WFMPRE:YMULT?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')
+
+An uncaught exception occurred. If the exception was explicitly raised by the tm_devices package, look for the most recent previous ERROR log entry above to see the specific timestamp of the exception. Otherwise, use the traceback to debug the issue.
+
+Traceback (most recent call last):
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 363, in query
+    response = self._visa_resource.query(query).strip()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 690, in query
+    return self.read()
+           ^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 519, in read
+    message = self._read_raw().decode(enco)
+              ^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\resources\messagebased.py", line 473, in _read_raw
+    chunk, status = self.visalib.read(self.session, size)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\functions.py", line 2339, in read
+    ret = library.viRead(session, buffer, count, byref(return_count))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\ctwrapper\highlevel.py", line 227, in _return_handler
+    return self.handle_return_value(session, ret_value)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\pyvisa\highlevel.py", line 252, in handle_return_value
+    raise errors.VisaIOError(rv)
+pyvisa.errors.VisaIOError: VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 118, in <module>
+    main()
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 114, in main
+    run_test(args.yaml_file)
+  File "c:\Users\s250127\RI_Batbal_Testbench\run_test.py", line 80, in run_test
+    execute_step(step, inst)
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\step_dispatcher.py", line 31, in execute_step
+    inst.capture(
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\tektronix_mso58.py", line 146, in capture
+    ymult = float(self.query("WFMPRE:YMULT?"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\s250127\RI_Batbal_Testbench\instruments\tektronix_mso58.py", line 45, in query
+    return self.scope.query(cmd)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s250127\.conda\envs\testbench\Lib\site-packages\tm_devices\driver_mixins\device_control\pi_control.py", line 373, in query
+    raise visa.Error(msg) from error
+pyvisa.errors.Error: The query of SCOPE 1 "SCOPE1" for 'WFMPRE:YMULT?' failed with the following message: VisaIOError('VI_ERROR_TMO (-1073807339): Timeout expired before operation completed.')

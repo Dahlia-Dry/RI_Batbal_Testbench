@@ -64,7 +64,6 @@ class TekMSO58:
         trig_level = trigger.get("level", 1.0)
 
         # Example SCPI for Tektronix MSO5/MSO6
-        #print(dir(self.scope.commands.trigger))
         self.scope.commands.trigger.a.type.write(trig_type)
         #self.scope.commands.trigger.level.write(trig_level)
         #self.scope.commands.trigger.source.write(trig_source)
@@ -73,6 +72,7 @@ class TekMSO58:
 
         # Channel settings
         for ch, cfg in channels.items():
+            self.write(f"SELECT:{ch} ON")
             scale = cfg.get("scale", None)
             position = cfg.get("position", None)
 
@@ -86,68 +86,99 @@ class TekMSO58:
     # Uses curve_query() — VERIFIED in repo
     # ------------------------------
     def capture(self, channels, duration, save_to=None, sample_rate=None, show_plot=False):
-        #self.scope.commands.acquire.state.write("OFF")
+        self.scope.commands.acquire.state.write("OFF")
         self.scope.commands.acquire.mode.write("SAMPLE")
         self.scope.commands.acquire.stopafter.write("SEQUENCE")
 
         self.write("HOR:MODE MANUAL")
-        self.write(f"HOR:MAIN:SCALE {duration / 10}")
+        self.write(f"HOR:MAIN:SCALE {duration}")
 
         if sample_rate:
             record_length = int(duration * sample_rate)
             self.write(f"HORIZONTAL:RECORDLENGTH {record_length}")
+
         
-        self.scope.commands.acquire.state.write("RUN")
+        #self.scope.commands.measurement.meas[1].source.write("CH1")
+        
+        #self.scope.commands.acquire.state.write("ON")
 
         # Give the scope enough time to acquire
         # Wait until acquisition stops (e.g., in SEQUENCE mode)
-        while int(self.scope.commands.acquire.state.query()) != 0:
-            time.sleep(0.5)
+        #while int(self.scope.commands.acquire.state.query()) != 0:
+            #time.sleep(0.5)
 
-        curve_returned = self.scope.curve_query(1, output_csv_file="test.csv")
+        #self.scope.commands.acquire.state.write("OFF")
 
+        #curve_returned = self.scope.curve_query(1, output_csv_file="test.csv")
+        #print(dir(self.scope.commands.measurement.meas[1].results.currentacq))
+        #print(self.scope.commands.measurement.meas[1].results.currentacq.population.query())
         datafile = pd.DataFrame()
 
+
+
         for ch in channels:
-            # --- Configure binary waveform transfer ---
+            print(f"Acquiring ch {ch}")
+            # ---------------------------
+            # RE-ACQUIRE FOR THIS CHANNEL
+            # ---------------------------
+
+            # Select channel BEFORE running acquisition
             self.write(f"DATA:SOURCE CH{ch}")
-            self.write("DATA:ENC RIBINARY")
-            self.write("DATA:WIDTH 1")   # 1 byte per sample
+
+            # Configure binary format
+            self.write("DATA:ENC SRIbinary")
+            self.write("DATA:WIDTH 2")
+
+            # Run SEQUENCE acquisition again
+            self.write("ACQ:STOPAfter SEQ")
+            self.write("ACQ:STATE ON")
+
+            # Wait for acquisition to complete
+            while int(self.query("ACQ:STATE?")) != 0:
+                time.sleep(0.1)
+
+            # Stop acquisition
+            self.write("ACQ:STATE OFF")
+            time.sleep(0.05)
+
+            # ---------------------------
+            # NOW METADATA IS VALID
+            # ---------------------------
 
             ymult = float(self.query("WFMPRE:YMULT?"))
             yoff  = float(self.query("WFMPRE:YOFF?"))
             yzero = float(self.query("WFMPRE:YZERO?"))
             xincr = float(self.query("WFMPRE:XINCR?"))
 
-            # --- Trigger data transfer ---
+            # ---------------------------
+            # FETCH THE WAVEFORM
+            # ---------------------------
             self.write("CURVE?")
-
             raw = self.scope.read_raw()
 
-            # --- Parse definite-length block ---
-            # Format: #<n><len><binary data>
+            # Parse block
             assert raw[0:1] == b"#"
-            n_digits = int(raw[1:2])
-            n_bytes  = int(raw[2:2+n_digits])
-            data_start = 2 + n_digits
-            data_end   = data_start + n_bytes
+            ndigits = int(raw[1:2])
+            nbytes  = int(raw[2:2+ndigits])
+            start = 2 + ndigits
+            end   = start + nbytes
 
-            data_raw = raw[data_start:data_end]
+            buf = raw[start:end]
 
-            samples = np.frombuffer(data_raw, dtype=np.int8)
+            samples = np.frombuffer(buf, dtype="<i2")
+            volts = (samples - yoff) * ymult + yzero
 
-            data_offset = (samples - yoff) * ymult + yzero
-            datafile["t"] = np.arange(len(data_offset)) * xincr
-            datafile[f"data_ch{ch}"] = data_offset
+            t = np.arange(len(volts)) * xincr
 
-
+            datafile["t"] = t
+            datafile[f"ch{ch}"] = volts
 
         if save_to is not None:
             datafile.to_csv(save_to)
 
         if show_plot:
             #fig=plt.figure()
-            plt.scatter(x=datafile["t"],y=datafile["data_ch1"])
+            plt.plot(datafile["t"],datafile["ch1"])
             plt.show()
         return datafile 
 

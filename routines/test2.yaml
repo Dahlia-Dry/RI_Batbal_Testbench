@@ -25,8 +25,8 @@ sequence:
     channel: 1
     waveform:
       type: sine
-      freq: 1e6
-      amplitude: 2.0
+      freq: 1e8
+      amplitude: 3.0
       offset: 0.0
     output:
       impedance: "50ohm"
@@ -38,9 +38,12 @@ sequence:
       type: edge
       level: 1.0
       source: CH1
+    channels:
+      CH1: {scale: 1, position: 0}
+      CH2: {scale: 1, position: 0}
 
   - action: capture
     instrument: tektronix_mso58
-    channels: [CH1, CH2]
-    duration: 1.0
+    channels: [1, 2]
+    duration: 100
     save_to: "capture.csv"
