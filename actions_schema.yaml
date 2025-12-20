@@ -373,10 +373,13 @@ actions:
       properties:
         channel:
           type: int
+          description: "The channel number"
         impedance:
           type: string
+          description: "The configured output impedance"
         output_enabled:
           type: bool
+          description: "Whether output is enabled"
 
   wavegen_start_waveform:
     description: Configure waveform parameters and start output.
