@@ -71,6 +71,12 @@ Use the `--help` option to view documentation directly from the command line:
 
 This section provides example test routines demonstrating the framework's capabilities. Each example includes a description and links to execution logs.
 
+### tektronix_mso58_test
+
+This oscilloscope example shows waveform acquisition and analysis. It configures the Tektronix MSO58 with appropriate trigger settings, channel scaling, and measurement parameters for an externally set signal, captures waveform data to a CSV file, and takes a screenshot for visual verification.
+
+[Routine File](routines/tektronix_mso58_test.yaml) | [Results](capture.csv) | [Successful Logfile](testbench_logs/20251218-162323-tektronix_mso58_test.log)
+
 ### keithley_2450_test
 
 This example demonstrates basic source-measure unit (SMU) operation by performing an I-V sweep on the Keithley 2450. It configures the instrument for voltage sourcing and current measurement, sweeps voltage from 0V to 3.3V in 0.1V steps, and saves the resulting current measurements to a CSV file for analysis.
@@ -82,12 +88,6 @@ This example demonstrates basic source-measure unit (SMU) operation by performin
 This routine shows how to control a programmable DC power supply. It configures the Keysight E36312 to set specific voltage and current limits, enables the output, measures the actual output values, and then safely disables the output.
 
 [Routine File](routines/keysight_es36312_test.yaml) | [Successful Logfile](testbench_logs/20251218-124042-keysight_es36312_test.log)
-
-### multi_inst_test
-
-This example demonstrates multi-instrument operation. It simultaneously controls a Keithley 2450 SMU for I-V characterization, a Keysight E36312 power supply for device biasing, and a Tektronix MSO58 oscilloscope for waveform monitoring.
-
-[Routine File](routines/multi_inst_test.yaml) | [Successful Logfile](testbench_logs/20251218-174253-multi_inst_test.log)
 
 ### ni_vb_test
 
@@ -101,17 +101,17 @@ This routine demonstrates function generator control with the Rigol DG1062Z. It 
 
 [Routine File](routines/rigol_dg1062z_test.yaml) | [Successful Logfile](testbench_logs/20251218-122837-rigol_dg1062z_test.log)
 
+### multi_inst_test
+
+This example demonstrates multi-instrument operation. It simultaneously controls a Keithley 2450 SMU for I-V characterization, a Keysight E36312 power supply for device biasing, and a Tektronix MSO58 oscilloscope for waveform monitoring.
+
+[Routine File](routines/multi_inst_test.yaml) | [Successful Logfile](testbench_logs/20251218-174253-multi_inst_test.log)
+
 ### script_example
 
-This example demonstrates the framework's scripting capabilities by generating a sine wave with the Rigol function generator, capturing it with the Tektronix oscilloscope, validating the captured waveform data using a custom Python [script](scripts/validate_waveform.py), and setting a DIO pin on the NI VirtualBench based on the validation result (pass/fail).
+This example demonstrates the framework's scripting capabilities by generating a sine wave with the Rigol function generator, capturing it with the Tektronix oscilloscope, validating the captured waveform data using a custom Python script, and setting a DIO pin on the NI VirtualBench based on the validation result (pass/fail).
 
-[Routine File](routines/script_example.yaml) | [Results](results/wave_capture.csv) | [Successful Logfile](testbench_logs/20251218-174048-script_example.log)
-
-### tektronix_mso58_test
-
-This oscilloscope example shows waveform acquisition and analysis. It configures the Tektronix MSO58 with appropriate trigger settings, channel scaling, and measurement parameters for an externally set signal, captures waveform data to a CSV file, and takes a screenshot for visual verification.
-
-[Routine File](routines/tektronix_mso58_test.yaml) | [Results](capture.csv) | [Successful Logfile](testbench_logs/20251218-162323-tektronix_mso58_test.log)
+[Routine File](routines/script_example.yaml) | [Python Script](scripts/validate_waveform.py) | [Results](results/wave_capture.csv) | [Successful Logfile](testbench_logs/20251218-174048-script_example.log)
 
 ## Architecture
 
@@ -211,7 +211,74 @@ sequence:
 
 ### Scripting
 
-To further boost customizability, support exists for a python script to be inserted and run in the middle of a test sequence. An example of this is shown in the test routine [script_example.yaml](routines/script_example.yaml). The implementation of this functionality can be found in the [step_dispatcher](instruments/step_dispatcher.py) module, and a python script template can be found [here](scripts/script_template.py). The script gets `input_data` as a global variable containing the result output dictionary from the previous action step, and must define a dict `OUTPUT` containing the results to be accessed by the next action step.
+To further boost customizability, support exists for a python script to be inserted and run in the middle of a test sequence. The implementation of this functionality can be found in the [step_dispatcher](instruments/step_dispatcher.py) module, and a python script template can be found [here](scripts/script_template.py). The script gets `input_data` as a global variable containing the result output dictionary from the previous action step, and must define a dict `OUTPUT` containing the results to be accessed by the next action step. 
+
+**Note**: If running a script inside a `.yaml` routine, `local` must be added to the `instruments` list as shown in the following example such that it will be properly read by the step dispatcher:
+```yaml
+    description: Measure a signal, compute a trigger level in a script, and reuse it.
+
+    instruments:
+        tektronix_mso58:
+            ip: "${TEKTRONIX_IP}"
+
+        local:
+            ip: "localhost"
+
+    sequence:
+        - action: scope_configure
+            instrument: tektronix_mso58
+            trigger:
+            type: edge
+            source: CH1
+            level: 0.0
+            channels:
+            CH1:
+                scale: 0.5
+                position: 0
+            measurements:
+            - type: vmax
+                source: CH1
+
+        - action: scope_capture
+            instrument: tektronix_mso58
+            channels: [CH1]
+            duration: 0.01
+            save_to: results/capture.csv
+
+        # Script computes a new value from the measurement
+        - action: run_script
+            instrument: local
+            script: scripts/compute_trigger_level.py
+
+        # Script output is reused here
+        - action: scope_configure
+            instrument: tektronix_mso58
+            trigger:
+            type: edge
+            source: CH1
+            level: "$last.trigger_level"
+            channels:
+            CH1:
+                scale: 0.5
+                position: 0
+```
+A simple python script `compute_trigger_level.py` could then look like the following:
+```python
+    # Provided automatically by step dispatcher
+    data = input_data
+
+    vmax = data["measurements"]["vmax"]
+
+    # Compute a new trigger level (50% of peak)
+    trigger_level = vmax / 2.0
+
+    print(f"Computed trigger level: {trigger_level:.3f} V")
+
+    OUTPUT = {
+        "trigger_level": trigger_level
+    }
+```
+An additional example with scripting can be found [here](routines/script_example.yaml).
 
 ### Delays
 
