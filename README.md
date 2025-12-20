@@ -416,6 +416,16 @@ Configure baseline PSU channel settings.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| current_limit | float |
+| voltage_limit | float |
+| output_enabled | bool |
+| sense_mode | string |
+
 #### psu_set_power
 
 Convenience action to set voltage and current limit.
@@ -433,6 +443,16 @@ Convenience action to set voltage and current limit.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| ramped | bool |
+| ramp_time | float |
+
 #### psu_ramp_voltage
 
 Ramp PSU voltage to a target value.
@@ -449,6 +469,14 @@ Ramp PSU voltage to a target value.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| target_voltage | float |
+| ramp_time | float |
+
 #### psu_measure_voltage
 
 Measure PSU output voltage.
@@ -462,6 +490,13 @@ Measure PSU output voltage.
 ##### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
 
 #### psu_measure_current
 
@@ -477,6 +512,13 @@ Measure PSU output current.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| current | float |
+
 #### psu_measure_power
 
 Measure PSU output power.
@@ -490,6 +532,13 @@ Measure PSU output power.
 ##### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| power | float |
 
 
 ### keithley_2450
@@ -523,9 +572,18 @@ Configure baseline SMU source and measurement settings.
 
 ##### Returns
 
-Active SMU configuration.
-
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| source_function | string |
+| source_level | float |
+| compliance_limit | float |
+| measure_function | string |
+| sense_mode | string |
+| output_enabled | bool |
 
 #### smu_set_output
 
@@ -563,6 +621,15 @@ Convenience action to set SMU source level and compliance.
 ##### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| source_function | string |
+| level | float |
+| compliance_limit | float |
+| output_enabled | bool |
 
 #### smu_measure_voltage
 
@@ -692,6 +759,18 @@ Configure waveform parameters and start output.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| waveform | string |
+| frequency | float |
+| amplitude | float |
+| offset | float |
+| impedance | string |
+| output_enabled | bool |
+
 #### wavegen_stop_waveform
 
 Disable waveform output on a channel.
@@ -742,8 +821,6 @@ Configure oscilloscope trigger, channels, timebase, and measurements.
 | measurements | list | no | - | Automatic oscilloscope measurements. (list of:<br>dict:<br>- type: string<br>allowed: `vpp`, `vmax`, `vmin`, `vtop`, `vbase`, `vamp`, `vrms`, `vmean`, `freq`, `period`, `duty`, `poswidth`, `negwidth`, `rise`, `fall`, `overshoot`, `preshoot` (Measurement type)<br>- source: string (Channel name (e.g. CH1).)) |
 
 ##### Returns
-
-Active oscilloscope configuration.
 
 Type: dict
 
@@ -843,6 +920,15 @@ Configure VirtualBench PSU channel settings.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| output_enabled | bool |
+
 #### vb_psu_set_power
 
 Set PSU voltage and current limit and enable output.
@@ -858,6 +944,15 @@ Set PSU voltage and current limit and enable output.
 ##### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| output_enabled | bool |
 
 #### vb_dio_configure
 
@@ -889,6 +984,13 @@ Write values to Digital IO lines.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| lines | list |
+| values | list |
+
 #### vb_dio_read
 
 Read values from Digital IO lines.
@@ -902,4 +1004,11 @@ Read values from Digital IO lines.
 ##### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| lines | list |
+| values | list |
 

@@ -29,9 +29,18 @@ Configure baseline SMU source and measurement settings.
 
 ### Returns
 
-Active SMU configuration.
-
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| source_function | string |
+| source_level | float |
+| compliance_limit | float |
+| measure_function | string |
+| sense_mode | string |
+| output_enabled | bool |
 
 ## smu_set_output
 
@@ -69,6 +78,15 @@ Convenience action to set SMU source level and compliance.
 ### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| source_function | string |
+| level | float |
+| compliance_limit | float |
+| output_enabled | bool |
 
 ## smu_measure_voltage
 

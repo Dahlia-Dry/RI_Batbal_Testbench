@@ -128,7 +128,6 @@ class KeysightE36312(Instrument):
             "ramp_time": ramp_time,
         }
 
-    # --- NEW: standalone ramp action ---
 
     def ramp_voltage(self, ch, target_voltage, ramp_time, steps=20):
         self._select(ch)
@@ -150,7 +149,6 @@ class KeysightE36312(Instrument):
             "ramp_time": ramp_time,
         }
 
-    # --- NEW: baseline configuration ---
 
     def configure_psu(
         self,

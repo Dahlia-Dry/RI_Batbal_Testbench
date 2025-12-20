@@ -31,6 +31,15 @@ Configure VirtualBench PSU channel settings.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| output_enabled | bool |
+
 ## vb_psu_set_power
 
 Set PSU voltage and current limit and enable output.
@@ -46,6 +55,15 @@ Set PSU voltage and current limit and enable output.
 ### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| output_enabled | bool |
 
 ## vb_dio_configure
 
@@ -77,6 +95,13 @@ Write values to Digital IO lines.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| lines | list |
+| values | list |
+
 ## vb_dio_read
 
 Read values from Digital IO lines.
@@ -90,4 +115,11 @@ Read values from Digital IO lines.
 ### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| lines | list |
+| values | list |
 

@@ -30,6 +30,16 @@ Configure baseline PSU channel settings.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| current_limit | float |
+| voltage_limit | float |
+| output_enabled | bool |
+| sense_mode | string |
+
 ## psu_set_power
 
 Convenience action to set voltage and current limit.
@@ -47,6 +57,16 @@ Convenience action to set voltage and current limit.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
+| current_limit | float |
+| ramped | bool |
+| ramp_time | float |
+
 ## psu_ramp_voltage
 
 Ramp PSU voltage to a target value.
@@ -63,6 +83,14 @@ Ramp PSU voltage to a target value.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| target_voltage | float |
+| ramp_time | float |
+
 ## psu_measure_voltage
 
 Measure PSU output voltage.
@@ -76,6 +104,13 @@ Measure PSU output voltage.
 ### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| voltage | float |
 
 ## psu_measure_current
 
@@ -91,6 +126,13 @@ Measure PSU output current.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| current | float |
+
 ## psu_measure_power
 
 Measure PSU output power.
@@ -104,4 +146,11 @@ Measure PSU output power.
 ### Returns
 
 Type: dict
+
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| power | float |
 

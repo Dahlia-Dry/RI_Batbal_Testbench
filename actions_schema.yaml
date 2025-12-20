@@ -29,6 +29,22 @@ actions:
         description: "Sense mode for measurements"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The configured channel number"
+        current_limit:
+          type: float
+          description: "The configured current limit (or null if not set)"
+        voltage_limit:
+          type: float
+          description: "The configured voltage limit (or null if not set)"
+        output_enabled:
+          type: bool
+          description: "Whether the output is enabled"
+        sense_mode:
+          type: string
+          description: "The configured sense mode"
 
   psu_set_power:
     description: Convenience action to set voltage and current limit.
@@ -52,6 +68,22 @@ actions:
         default: 0.0
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The channel number"
+        voltage:
+          type: float
+          description: "The set voltage"
+        current_limit:
+          type: float
+          description: "The set current limit"
+        ramped:
+          type: bool
+          description: "Whether voltage ramping was used"
+        ramp_time:
+          type: float
+          description: "The ramp time used (only present if ramped)"
 
   psu_ramp_voltage:
     description: Ramp PSU voltage to a target value.
@@ -71,6 +103,16 @@ actions:
         description: "Time to ramp voltage in seconds"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The channel number"
+        target_voltage:
+          type: float
+          description: "The target voltage"
+        ramp_time:
+          type: float
+          description: "The ramp time used"
   
   psu_measure_voltage:
     description: Measure PSU output voltage.
@@ -82,6 +124,13 @@ actions:
         description: "Power supply channel number (1-3)"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The measured channel"
+        voltage:
+          type: float
+          description: "The measured voltage in volts"
 
   psu_measure_current:
     description: Measure PSU output current.
@@ -93,6 +142,13 @@ actions:
         description: "Power supply channel number (1-3)"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The measured channel"
+        current:
+          type: float
+          description: "The measured current in amperes"
 
   psu_measure_power:
     description: Measure PSU output power.
@@ -104,6 +160,13 @@ actions:
         description: "Power supply channel number (1-3)"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The measured channel"
+        power:
+          type: float
+          description: "The calculated power (voltage x current) in watts"
   
 # KEITHLEY 2450 ACTIONS ----------------------------------------------------------
   smu_configure:
@@ -141,7 +204,25 @@ actions:
         description: "Whether to enable output after configuration"
     returns:
       type: dict
-      description: Active SMU configuration.
+      properties:
+        source_function:
+          type: string
+          description: "The configured source function"
+        source_level:
+          type: float
+          description: "The configured source level"
+        compliance_limit:
+          type: float
+          description: "The configured compliance limit"
+        measure_function:
+          type: string
+          description: "The configured measurement function"
+        sense_mode:
+          type: string
+          description: "The configured sense mode"
+        output_enabled:
+          type: bool
+          description: "Whether output is enabled"
 
   smu_set_output:
     description: Enable or disable SMU output.
@@ -181,6 +262,19 @@ actions:
         description: "Whether to enable output after setting"
     returns:
       type: dict
+      properties:
+        source_function:
+          type: string
+          description: "The set source function"
+        level:
+          type: float
+          description: "The set source level"
+        compliance_limit:
+          type: float
+          description: "The set compliance limit"
+        output_enabled:
+          type: bool
+          description: "Whether output is enabled"
 
   smu_measure_voltage:
     description: Measure voltage using the SMU.
@@ -191,6 +285,7 @@ actions:
       properties:
         voltage:
           type: float
+          description: "The measured voltage in volts"
 
   smu_measure_current:
     description: Measure current using the SMU.
@@ -201,6 +296,7 @@ actions:
       properties:
         current:
           type: float
+          description: "The measured current in amperes"
 
   smu_sweep:
     description: Perform a stepped source sweep and measure at each step.
@@ -320,6 +416,28 @@ actions:
 
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The configured channel"
+        waveform:
+          type: string
+          description: "The waveform type (sine, square, ramp)"
+        frequency:
+          type: float
+          description: "The configured frequency"
+        amplitude:
+          type: float
+          description: "The configured amplitude"
+        offset:
+          type: float
+          description: "The configured offset"
+        impedance:
+          type: string
+          description: "The configured output impedance"
+        output_enabled:
+          type: bool
+          description: "Whether output is enabled"
 
 
   wavegen_stop_waveform:
@@ -335,8 +453,10 @@ actions:
       properties:
         channel:
           type: int
+          description: "The channel number"
         output_enabled:
           type: bool
+          description: "Whether output is enabled (always false)"
 
 
 # TEKTRONIX MSO58 ACTIONS ----------------------------------------------------------
@@ -416,16 +536,19 @@ actions:
               description: Channel name (e.g. CH1).
     returns:
       type: dict
-      description: Active oscilloscope configuration.
       properties:
         trigger:
           type: dict
+          description: "Configured trigger settings"
         channels:
           type: dict
+          description: "Configured channel settings"
         timebase:
           type: dict
+          description: "Configured timebase settings"
         measurements:
           type: list
+          description: "Configured measurement settings"
 
   scope_capture:
     description: Capture waveform from oscilloscope and save to CSV.
@@ -508,6 +631,19 @@ actions:
         default: false
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The configured channel number"
+        voltage:
+          type: float
+          description: "The set voltage (or null if not set)"
+        current_limit:
+          type: float
+          description: "The set current limit (or null if not set)"
+        output_enabled:
+          type: bool
+          description: "Whether output is enabled"
 
   vb_psu_set_power:
     description: Set PSU voltage and current limit and enable output.
@@ -527,6 +663,19 @@ actions:
         description: "Current limit in amperes"
     returns:
       type: dict
+      properties:
+        channel:
+          type: int
+          description: "The channel number"
+        voltage:
+          type: float
+          description: "The set voltage"
+        current_limit:
+          type: float
+          description: "The set current limit"
+        output_enabled:
+          type: bool
+          description: "Whether output is enabled"
 
   vb_dio_configure:
     description: Configure Digital IO direction.
@@ -543,6 +692,13 @@ actions:
         description: "Direction for the lines"
     returns:
       type: dict
+      perperties:
+        lines:
+          type: list
+          description: "The configured digital IO lines"
+        direction:
+          type: string
+          description: "The configured direction"
 
   vb_dio_write:
     description: Write values to Digital IO lines.
@@ -558,6 +714,13 @@ actions:
         description: "List of values to write (0 or 1)"
     returns:
       type: dict
+      properties:
+        lines:
+          type: list
+          description: "The digital IO lines written to"
+        values:
+          type: list
+          description: "The values written to the lines"
 
   vb_dio_read:
     description: Read values from Digital IO lines.
@@ -569,3 +732,10 @@ actions:
         description: "List of digital IO line numbers"
     returns:
       type: dict
+      properties:
+        lines:
+          type: list
+          description: "The digital IO lines read from"
+        values:
+          type: list
+          description: "The values read from the lines"

@@ -54,6 +54,18 @@ Configure waveform parameters and start output.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| channel | int |
+| waveform | string |
+| frequency | float |
+| amplitude | float |
+| offset | float |
+| impedance | string |
+| output_enabled | bool |
+
 ## wavegen_stop_waveform
 
 Disable waveform output on a channel.

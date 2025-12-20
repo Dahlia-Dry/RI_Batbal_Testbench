@@ -27,8 +27,6 @@ Configure oscilloscope trigger, channels, timebase, and measurements.
 
 ### Returns
 
-Active oscilloscope configuration.
-
 Type: dict
 
 Properties:
