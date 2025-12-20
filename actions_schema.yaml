@@ -692,7 +692,7 @@ actions:
         description: "Direction for the lines"
     returns:
       type: dict
-      perperties:
+      properties:
         lines:
           type: list
           description: "The configured digital IO lines"

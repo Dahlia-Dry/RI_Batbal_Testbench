@@ -969,6 +969,13 @@ Configure Digital IO direction.
 
 Type: dict
 
+Properties:
+
+| Name | Type | Description |
+|------|------|-------------|
+| lines | list | The configured digital IO lines |
+| direction | string | The configured direction |
+
 #### vb_dio_write
 
 Write values to Digital IO lines.

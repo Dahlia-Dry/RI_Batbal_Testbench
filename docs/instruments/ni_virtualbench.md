@@ -80,6 +80,13 @@ Configure Digital IO direction.
 
 Type: dict
 
+Properties:
+
+| Name | Type |
+|------|------|
+| lines | list |
+| direction | string |
+
 ## vb_dio_write
 
 Write values to Digital IO lines.
