@@ -418,13 +418,13 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| current_limit | float |
-| voltage_limit | float |
-| output_enabled | bool |
-| sense_mode | string |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The configured channel number |
+| current_limit | float | The configured current limit (or null if not set) |
+| voltage_limit | float | The configured voltage limit (or null if not set) |
+| output_enabled | bool | Whether the output is enabled |
+| sense_mode | string | The configured sense mode |
 
 #### psu_set_power
 
@@ -445,13 +445,13 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| voltage | float |
-| current_limit | float |
-| ramped | bool |
-| ramp_time | float |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The channel number |
+| voltage | float | The set voltage |
+| current_limit | float | The set current limit |
+| ramped | bool | Whether voltage ramping was used |
+| ramp_time | float | The ramp time used (only present if ramped) |
 
 #### psu_ramp_voltage
 
@@ -471,11 +471,11 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| target_voltage | float |
-| ramp_time | float |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The channel number |
+| target_voltage | float | The target voltage |
+| ramp_time | float | The ramp time used |
 
 #### psu_measure_voltage
 
@@ -493,10 +493,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| voltage | float |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The measured channel |
+| voltage | float | The measured voltage in volts |
 
 #### psu_measure_current
 
@@ -514,10 +514,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| current | float |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The measured channel |
+| current | float | The measured current in amperes |
 
 #### psu_measure_power
 
@@ -535,10 +535,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| power | float |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The measured channel |
+| power | float | The calculated power (voltage x current) in watts |
 
 
 ### keithley_2450
@@ -576,14 +576,14 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| source_function | string |
-| source_level | float |
-| compliance_limit | float |
-| measure_function | string |
-| sense_mode | string |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| source_function | string | The configured source function |
+| source_level | float | The configured source level |
+| compliance_limit | float | The configured compliance limit |
+| measure_function | string | The configured measurement function |
+| sense_mode | string | The configured sense mode |
+| output_enabled | bool | Whether output is enabled |
 
 #### smu_set_output
 
@@ -601,9 +601,9 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| output_enabled | bool |  |
 
 #### smu_set_source
 
@@ -624,12 +624,12 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| source_function | string |
-| level | float |
-| compliance_limit | float |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| source_function | string | The set source function |
+| level | float | The set source level |
+| compliance_limit | float | The set compliance limit |
+| output_enabled | bool | Whether output is enabled |
 
 #### smu_measure_voltage
 
@@ -641,9 +641,9 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| voltage | float |
+| Name | Type | Description |
+|------|------|-------------|
+| voltage | float | The measured voltage in volts |
 
 #### smu_measure_current
 
@@ -655,9 +655,9 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| current | float |
+| Name | Type | Description |
+|------|------|-------------|
+| current | float | The measured current in amperes |
 
 #### smu_sweep
 
@@ -681,10 +681,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| points | list |
-| file | string |
+| Name | Type | Description |
+|------|------|-------------|
+| points | list |  |
+| file | string | Path to saved CSV file (if saved). |
 
 #### smu_reset
 
@@ -737,11 +737,11 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| impedance | string |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int |  |
+| impedance | string |  |
+| output_enabled | bool |  |
 
 #### wavegen_start_waveform
 
@@ -761,15 +761,15 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| waveform | string |
-| frequency | float |
-| amplitude | float |
-| offset | float |
-| impedance | string |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The configured channel |
+| waveform | string | The waveform type (sine, square, ramp) |
+| frequency | float | The configured frequency |
+| amplitude | float | The configured amplitude |
+| offset | float | The configured offset |
+| impedance | string | The configured output impedance |
+| output_enabled | bool | Whether output is enabled |
 
 #### wavegen_stop_waveform
 
@@ -787,10 +787,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The channel number |
+| output_enabled | bool | Whether output is enabled (always false) |
 
 
 ### tektronix_mso58
@@ -826,12 +826,12 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| trigger | dict |
-| channels | dict |
-| timebase | dict |
-| measurements | list |
+| Name | Type | Description |
+|------|------|-------------|
+| trigger | dict | Configured trigger settings |
+| channels | dict | Configured channel settings |
+| timebase | dict | Configured timebase settings |
+| measurements | list | Configured measurement settings |
 
 #### scope_capture
 
@@ -854,14 +854,14 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channels | list |
-| duration | float |
-| file | string |
-| num_channels | int |
-| samples_per_channel | dict |
-| measurements | dict |
+| Name | Type | Description |
+|------|------|-------------|
+| channels | list |  |
+| duration | float |  |
+| file | string |  |
+| num_channels | int |  |
+| samples_per_channel | dict |  |
+| measurements | dict | Retrieved oscilloscope measurement values. |
 
 #### scope_screenshot
 
@@ -881,10 +881,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| file | string |
-| colors | string |
+| Name | Type | Description |
+|------|------|-------------|
+| file | string | Path to the saved screenshot file. |
+| colors | string | Color mode used for the screenshot. |
 
 
 ### ni_virtualbench
@@ -922,12 +922,12 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| voltage | float |
-| current_limit | float |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The configured channel number |
+| voltage | float | The set voltage (or null if not set) |
+| current_limit | float | The set current limit (or null if not set) |
+| output_enabled | bool | Whether output is enabled |
 
 #### vb_psu_set_power
 
@@ -947,12 +947,12 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| channel | int |
-| voltage | float |
-| current_limit | float |
-| output_enabled | bool |
+| Name | Type | Description |
+|------|------|-------------|
+| channel | int | The channel number |
+| voltage | float | The set voltage |
+| current_limit | float | The set current limit |
+| output_enabled | bool | Whether output is enabled |
 
 #### vb_dio_configure
 
@@ -986,10 +986,10 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| lines | list |
-| values | list |
+| Name | Type | Description |
+|------|------|-------------|
+| lines | list | The digital IO lines written to |
+| values | list | The values written to the lines |
 
 #### vb_dio_read
 
@@ -1007,8 +1007,8 @@ Type: dict
 
 Properties:
 
-| Name | Type |
-|------|------|
-| lines | list |
-| values | list |
+| Name | Type | Description |
+|------|------|-------------|
+| lines | list | The digital IO lines read from |
+| values | list | The values read from the lines |
 

@@ -188,11 +188,12 @@ for instrument_name in supported_actions_per_instrument.keys():
                 properties = returns.get("properties", {})
                 if properties:
                     instrument_content += "Properties:\n\n"
-                    instrument_content += "| Name | Type |\n"
-                    instrument_content += "|------|------|\n"
+                    instrument_content += "| Name | Type | Description |\n"
+                    instrument_content += "|------|------|-------------|\n"
                     for prop_name, prop_info in properties.items():
                         prop_type = prop_info.get("type", "-")
-                        instrument_content += f"| {prop_name} | {prop_type} |\n"
+                        prop_desc = prop_info.get("description", "")
+                        instrument_content += f"| {prop_name} | {prop_type} | {prop_desc} |\n"
                     instrument_content += "\n"
 
     readme_sections.append(instrument_content)
