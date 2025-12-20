@@ -1,0 +1,37 @@
+description: Test routine for NI VirtualBench to configure PSU and Digital IO.
+instruments:
+  ni_virtualbench:
+    ip: "${NI_VB_HOSTNAME}"
+
+sequence:
+  # 1. PSU: configure + enable
+  - action: vb_psu_configure
+    instrument: ni_virtualbench
+    channel: 1
+    voltage: 5.0
+    current_limit: 0.5
+    output_enabled: true
+
+  # 2. Digital IO: configure lines 0–3 as outputs
+  - action: vb_dio_configure
+    instrument: ni_virtualbench
+    lines: [0, 1, 2, 3]
+    direction: output
+
+  # 3. Digital IO: write pattern
+  - action: vb_dio_write
+    instrument: ni_virtualbench
+    lines: [0, 1, 2, 3]
+    values: [1, 0, 1, 0]
+
+
+  # 4. Digital IO: read back
+  - action: vb_dio_read
+    instrument: ni_virtualbench
+    lines: [0, 1, 2, 3]
+
+  # 5. PSU: disable output at end
+  - action: vb_psu_enable
+    instrument: ni_virtualbench
+    channel: 1
+    enable: false

@@ -1,0 +1,27 @@
+description: Test routine for Rigol DG1062Z function generator to start a waveform, change load impedance, and stop the waveform.
+instruments:
+  rigol_dg1062z:
+    ip: "${RIGOL_IP}"
+
+sequence:
+  # --- 1. Start waveform (output ON by default) ---
+  - instrument: rigol_dg1062z
+    action: wavegen_start_waveform
+    channel: 1
+    waveform:
+      type: sine
+      frequency: 1000000   # 1 MHz
+      amplitude: 2.0       # Vpp
+      offset: 0.0
+
+  # --- 2. Change load impedance mid-test ---
+  - instrument: rigol_dg1062z
+    action: wavegen_configure_output
+    channel: 1
+    impedance: highz
+    delay_after: 1.0
+
+  # --- 3. Stop waveform output ---
+  - instrument: rigol_dg1062z
+    action: wavegen_stop_waveform
+    channel: 1

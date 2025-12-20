@@ -1,0 +1,51 @@
+description: Test routine for Keysight E36312 power supply to configure, set power, measure voltage/current/power, and ramp voltage.
+instruments:
+  keysight_e36312:
+    ip: "${KEYSIGHT_IP}"
+
+sequence:
+  # --- 1. Baseline configuration ---
+  - instrument: keysight_e36312
+    action: psu_configure
+    channel: 1
+    current_limit: 0.5
+    output_enabled: false
+
+  # --- 2. Set power (with ramp) ---
+  - instrument: keysight_e36312
+    action: psu_set_power
+    channel: 1
+    voltage: 3.0
+    current_limit: 0.5
+    ramp_time: 2.0
+
+  # --- 3. Measure voltage ---
+  - instrument: keysight_e36312
+    action: psu_measure_voltage
+    channel: 1
+
+  # --- 4. Measure current ---
+  - instrument: keysight_e36312
+    action: psu_measure_current
+    channel: 1
+
+  # --- 5. Measure power ---
+  - instrument: keysight_e36312
+    action: psu_measure_power
+    channel: 1
+
+  # --- 6. Ramp voltage down ---
+  - instrument: keysight_e36312
+    action: psu_ramp_voltage
+    channel: 1
+    target_voltage: 1.0
+    ramp_time: 1.5
+
+  # --- 7. Final measurements ---
+  - instrument: keysight_e36312
+    action: psu_measure_voltage
+    channel: 1
+
+  - instrument: keysight_e36312
+    action: psu_measure_current
+    channel: 1

@@ -1,0 +1,24 @@
+[LOG] Saving output to testbench_logs\20251218-172813-ni_vb_test.log
+Test file: c:\Users\s250127\RI_Batbal_Testbench\routines\ni_vb_test.yaml
+Start time: 2025-12-18T17:28:13.293867
+[IDN] ni_virtualbench: VB8034-31B6743
+
+=== Starting test sequence ===
+
+Step 1: vb_psu_configure on ni_virtualbench
+  Result: {'channel': 1, 'voltage': 5.0, 'current_limit': 0.5, 'output_enabled': True}
+
+Step 2: vb_dio_configure on ni_virtualbench
+  Result: {'lines': [0, 1, 2, 3], 'direction': 'output'}
+
+Step 3: vb_dio_write on ni_virtualbench
+  Result: {'lines': [0, 1, 2, 3], 'values': [True, False, True, False]}
+
+Step 4: vb_dio_read on ni_virtualbench
+  Result: {'lines': [0, 1, 2, 3], 'values': [True, False, True, False]}
+
+Step 5: vb_psu_enable on ni_virtualbench
+  Result: {'channel': 1, 'output_enabled': False}
+
+=== Test complete ===
+End time: 2025-12-18T17:28:13.789625

@@ -1,0 +1,69 @@
+description: Generate a sine wave, measure it with the scope, validate captured CSV, 
+  and set a DIO pin based on pass/fail.
+
+instruments:
+  rigol_dg1062z:
+    ip: "${RIGOL_IP}"
+
+  tektronix_mso58:
+    ip: "${TEKTRONIX_IP}"
+
+  ni_virtualbench:
+    ip: "${NI_VB_HOSTNAME}"
+
+  local:
+    ip: "localhost"
+  
+
+sequence:
+  - action: wavegen_start_waveform
+    instrument: rigol_dg1062z
+    channel: 1
+    waveform:
+      type: sine
+      frequency: 1
+      amplitude: 2.0
+      offset: 0.0
+    output:
+      impedance: highz
+      enabled: true
+
+  - action: vb_dio_configure
+    instrument: ni_virtualbench
+    lines: [0]
+    direction: output
+
+  - action: scope_configure
+    instrument: tektronix_mso58
+    trigger:
+      type: edge
+      source: CH1
+      level: 0.0
+    channels:
+      CH1:
+        scale: 0.5
+        position: 0
+    timebase:
+      scale: 1e-3
+    measurements:
+      - type: freq
+        source: CH1
+      - type: vmax
+        source: CH1
+      - type: vmin
+        source: CH1
+
+  - action: scope_capture
+    instrument: tektronix_mso58
+    channels: [CH1]
+    duration: 0.01
+    save_to: results/wave_capture.csv
+
+  - action: run_script
+    instrument: local
+    script: scripts/validate_waveform.py
+
+  - action: vb_dio_write
+    instrument: ni_virtualbench
+    lines: [0]
+    values: ["$last.result"]

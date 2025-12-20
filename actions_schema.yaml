@@ -1,0 +1,571 @@
+actions:
+
+# KEYSIGHT E36312 ACTIONS ----------------------------------------------------------
+  psu_configure:
+    description: Configure baseline PSU channel settings.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+      current_limit:
+        type: float
+        required: false
+        description: "Current limit in amperes"
+      voltage_limit:
+        type: float
+        required: false
+        description: "Voltage limit in volts"
+      output_enabled:
+        type: bool
+        required: false
+        default: false
+        description: "Whether to enable the output after configuration"
+      sense_mode:
+        type: string
+        enum: ["local", "remote"]
+        default: "local"
+        description: "Sense mode for measurements"
+    returns:
+      type: dict
+
+  psu_set_power:
+    description: Convenience action to set voltage and current limit.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+      voltage:
+        type: float
+        required: true
+        description: "Voltage to set in volts"
+      current_limit:
+        type: float
+        required: true
+        description: "Current limit in amperes"
+      ramp_time:
+        type: float
+        required: false
+        default: 0.0
+    returns:
+      type: dict
+
+  psu_ramp_voltage:
+    description: Ramp PSU voltage to a target value.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+      target_voltage:
+        type: float
+        required: true
+        description: "Target voltage to ramp to in volts"
+      ramp_time:
+        type: float
+        required: true
+        description: "Time to ramp voltage in seconds"
+    returns:
+      type: dict
+  
+  psu_measure_voltage:
+    description: Measure PSU output voltage.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+    returns:
+      type: dict
+
+  psu_measure_current:
+    description: Measure PSU output current.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+    returns:
+      type: dict
+
+  psu_measure_power:
+    description: Measure PSU output power.
+    instrument: "keysight_e36312"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Power supply channel number (1-3)"
+    returns:
+      type: dict
+  
+# KEITHLEY 2450 ACTIONS ----------------------------------------------------------
+  smu_configure:
+    description: Configure baseline SMU source and measurement settings.
+    instrument: "keithley_2450"
+    parameters:
+      source_function:
+        type: string
+        required: true
+        enum: ["voltage", "current"]
+        description: "Source function (voltage or current)"
+      source_level:
+        type: float
+        required: true
+        description: "Source level value"
+      compliance_limit:
+        type: float
+        required: true
+        description: Compliance limit (A when sourcing voltage, V when sourcing current).
+      measure_function:
+        type: string
+        required: true
+        enum: ["voltage", "current"]
+        description: "Measurement function (voltage or current)"
+      sense_mode:
+        type: string
+        required: false
+        enum: ["2w", "4w"]
+        default: "2w"
+        description: "Sensing mode (2-wire or 4-wire)"
+      output_enabled:
+        type: bool
+        required: false
+        default: false
+        description: "Whether to enable output after configuration"
+    returns:
+      type: dict
+      description: Active SMU configuration.
+
+  smu_set_output:
+    description: Enable or disable SMU output.
+    instrument: "keithley_2450"
+    parameters:
+      enabled:
+        type: bool
+        required: true
+        description: "True to enable output, False to disable"
+    returns:
+      type: dict
+      properties:
+        output_enabled:
+          type: bool
+
+  smu_set_source:
+    description: Convenience action to set SMU source level and compliance.
+    instrument: "keithley_2450"
+    parameters:
+      source_function:
+        type: string
+        required: true
+        enum: ["voltage", "current"]
+        description: "Source function (voltage or current)"
+      level:
+        type: float
+        required: true
+        description: "Source level value"
+      compliance_limit:
+        type: float
+        required: true
+        description: "Compliance limit value"
+      output_enabled:
+        type: bool
+        required: false
+        default: true
+        description: "Whether to enable output after setting"
+    returns:
+      type: dict
+
+  smu_measure_voltage:
+    description: Measure voltage using the SMU.
+    instrument: "keithley_2450"
+    parameters: {}
+    returns:
+      type: dict
+      properties:
+        voltage:
+          type: float
+
+  smu_measure_current:
+    description: Measure current using the SMU.
+    instrument: "keithley_2450"
+    parameters: {}
+    returns:
+      type: dict
+      properties:
+        current:
+          type: float
+
+  smu_sweep:
+    description: Perform a stepped source sweep and measure at each step.
+    instrument: "keithley_2450"
+    parameters:
+      start:
+        type: float
+        required: true
+        description: "Starting value for the sweep"
+      stop:
+        type: float
+        required: true
+        description: "Ending value for the sweep"
+      step:
+        type: float
+        required: true
+        description: "Step size for the sweep"
+      delay:
+        type: float
+        required: false
+        default: 0.0
+        description: "Delay between steps in seconds"
+      save_to:
+        type: string
+        required: false
+        description: "Optional path to save sweep results as CSV"
+    returns:
+      type: dict
+      description: Sweep results.
+      properties:
+        points:
+          type: list
+        file:
+          type: string
+          description: Path to saved CSV file (if saved).
+
+  smu_reset:
+    description: Reset the SMU to its default state.
+    instrument: "keithley_2450"
+    parameters: {}
+    returns:
+      type: dict
+
+  smu_zero_output:
+    description: Set source level to zero and disable output.
+    instrument: "keithley_2450"
+    parameters: {}
+    returns:
+      type: dict
+
+
+# RIGOL DG1062Z ACTIONS ----------------------------------------------------------
+  wavegen_configure:
+    description: Configure waveform generator output settings.
+    instrument: "rigol_dg1062z"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Waveform generator channel number"
+      impedance:
+        type: string
+        required: false
+        enum: ["50ohm", "highz"]
+        description: "Output load impedance"
+      enabled:
+        type: bool
+        required: false
+        description: "Enable waveform output"
+        description: Enable or disable waveform output.
+    returns:
+      type: dict
+      description: Active output configuration.
+      properties:
+        channel:
+          type: int
+        impedance:
+          type: string
+        output_enabled:
+          type: bool
+
+  wavegen_start_waveform:
+    description: Configure waveform parameters and start output.
+    instrument: "rigol_dg1062z"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Waveform generator channel number"
+
+      waveform:
+        type: dict
+        required: true
+        properties:
+          type:
+            type: string
+            enum: ["sine", "square", "ramp"]
+          frequency:
+            type: float
+          amplitude:
+            type: float
+          offset:
+            type: float
+            default: 0.0
+
+      output:
+        type: dict
+        required: false
+        description: Optional output configuration overrides.
+        properties:
+          impedance:
+            type: string
+            enum: ["50ohm", "highz"]
+          enabled:
+            type: bool
+            default: true
+
+    returns:
+      type: dict
+
+
+  wavegen_stop_waveform:
+    description: Disable waveform output on a channel.
+    instrument: "rigol_dg1062z"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "Waveform generator channel number"
+    returns:
+      type: dict
+      properties:
+        channel:
+          type: int
+        output_enabled:
+          type: bool
+
+
+# TEKTRONIX MSO58 ACTIONS ----------------------------------------------------------
+  scope_configure:
+    description: Configure oscilloscope trigger, channels, timebase, and measurements.
+    instrument: "tektronix_mso58"
+    parameters:
+      trigger:
+        type: dict
+        required: true
+        properties:
+          type:
+            type: string
+            enum: ["edge"]
+          source:
+            type: string
+            description: Trigger source channel (e.g. CH1).
+          level:
+            type: float
+            description: Trigger level in volts.
+      channels:
+        type: dict
+        required: true
+        description: Per-channel configuration keyed by channel name (e.g. CH1).
+        properties:
+          scale:
+            type: float
+            description: Vertical scale in volts per division.
+          position:
+            type: float
+            description: Vertical position in divisions.
+      timebase:
+        type: dict
+        required: false
+        description: Horizontal timebase configuration.
+        properties:
+          scale:
+            type: float
+            description: Time scale in seconds per division.
+          position:
+            type: float
+            description: Trigger position in divisions.
+      measurements:
+        type: list
+        required: false
+        description: Automatic oscilloscope measurements.
+        items:
+          type: dict
+          properties:
+            type:
+              type: string
+              description: Measurement type
+              enum: 
+                # Voltage
+                - vpp
+                - vmax
+                - vmin
+                - vtop
+                - vbase
+                - vamp
+                - vrms
+                - vmean
+                # Time / Frequency
+                - freq
+                - period
+                - duty
+                - poswidth
+                - negwidth
+                # Edges
+                - rise
+                - fall
+                # Signal quality
+                - overshoot
+                - preshoot
+            source:
+              type: string
+              description: Channel name (e.g. CH1).
+    returns:
+      type: dict
+      description: Active oscilloscope configuration.
+      properties:
+        trigger:
+          type: dict
+        channels:
+          type: dict
+        timebase:
+          type: dict
+        measurements:
+          type: list
+
+  scope_capture:
+    description: Capture waveform from oscilloscope and save to CSV.
+    instrument: "tektronix_mso58"
+    parameters:
+      channels:
+        type: list
+        required: true
+        description: "List of channels to capture (e.g. ['CH1', 'CH2'])"
+      duration:
+        type: float
+        required: true
+        description: "Duration of capture in seconds"
+      save_to:
+        type: string
+        required: true
+        description: "Path where the CSV file will be saved"
+      show_plot:
+        type: bool
+        required: false
+        default: false
+        description: "Display a simple plot of the captured waveform"
+    returns:
+      type: dict
+      description: Capture result metadata.
+      properties:
+        channels:
+          type: list
+        duration:
+          type: float
+        file:
+          type: string
+        num_channels:
+          type: int
+        samples_per_channel:
+          type: dict
+        measurements:
+          type: dict
+          description: Retrieved oscilloscope measurement values.
+
+  scope_screenshot:
+    description: Save a screenshot of the oscilloscope display.
+    instrument: "tektronix_mso58"
+    parameters:
+      save_to:
+        type: string
+        required: true
+        description: Path where the screenshot image will be saved.
+    returns:
+      type: dict
+      description: Screenshot metadata.
+      properties:
+        file:
+          type: string
+          description: Path to the saved screenshot file.
+        colors:
+          type: string
+          description: Color mode used for the screenshot.
+
+# NI VIRTUALBENCH ACTIONS ----------------------------------------------------------
+  vb_psu_configure:
+    description: Configure VirtualBench PSU channel settings.
+    instrument: "ni_virtualbench"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "PSU channel number"
+      voltage:
+        type: float
+        required: false
+        description: "Voltage setting in volts"
+      current_limit:
+        type: float
+        required: false
+        description: "Current limit in amperes"
+      output_enabled:
+        type: bool
+        required: false
+        default: false
+    returns:
+      type: dict
+
+  vb_psu_set_power:
+    description: Set PSU voltage and current limit and enable output.
+    instrument: "ni_virtualbench"
+    parameters:
+      channel:
+        type: int
+        required: true
+        description: "PSU channel number"
+      voltage:
+        type: float
+        required: true
+        description: "Voltage to set in volts"
+      current_limit:
+        type: float
+        required: true
+        description: "Current limit in amperes"
+    returns:
+      type: dict
+
+  vb_dio_configure:
+    description: Configure Digital IO direction.
+    instrument: "ni_virtualbench"
+    parameters:
+      lines:
+        type: list
+        required: true
+        description: "List of digital IO line numbers"
+      direction:
+        type: string
+        required: true
+        enum: ["input", "output"]
+        description: "Direction for the lines"
+    returns:
+      type: dict
+
+  vb_dio_write:
+    description: Write values to Digital IO lines.
+    instrument: "ni_virtualbench"
+    parameters:
+      lines:
+        type: list
+        required: true
+        description: "List of digital IO line numbers"
+      values:
+        type: list
+        required: true
+        description: "List of values to write (0 or 1)"
+    returns:
+      type: dict
+
+  vb_dio_read:
+    description: Read values from Digital IO lines.
+    instrument: "ni_virtualbench"
+    parameters:
+      lines:
+        type: list
+        required: true
+        description: "List of digital IO line numbers"
+    returns:
+      type: dict

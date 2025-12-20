@@ -1,0 +1,57 @@
+description: Test routine for multiple instruments: Keysight E36312 PSU, Rigol DG1062Z function generator, and Tektronix MSO58 oscilloscope.
+instruments:
+  keysight_e36312:
+    ip: "${KEYSIGHT_IP}"
+
+  rigol_dg1062z:
+    ip: "${RIGOL_IP}"
+
+  tektronix_mso58:
+    ip: "${TEKTRONIX_IP}"
+    
+sequence:
+# 1. Configure PSU to 5V, 0.5A
+  - action: psu_set_power
+    instrument: keysight_e36312
+    channel: 1
+    voltage: 5.0
+    current_limit: 0.5
+
+# 2. start waveform on function generator (1kHz sine wave, 2V amplitude)
+  - action: wavegen_start_waveform
+    instrument: rigol_dg1062z
+    channel: 1
+    waveform:
+      type: sine
+      frequency: 1000
+      amplitude: 2.0
+      offset: 0.0
+    output:
+      impedance: highz
+      enabled: true
+
+# 3. configure oscilloscope to capture waveform from function generator
+  - action: scope_configure
+    instrument: tektronix_mso58
+    trigger:
+      type: edge
+      source: CH1
+      level: 0.0
+    channels:
+      CH1:
+        scale: 0.5
+        position: 0
+    timebase:
+      scale: 1e-3
+    measurements:
+      - type: vpp
+        source: CH1
+      - type: freq
+        source: CH1
+
+# 4. capture waveform data from oscilloscope
+  - action: scope_capture
+    instrument: tektronix_mso58
+    channels: [CH1]
+    duration: 0.01
+    save_to: results/sine_capture.csv

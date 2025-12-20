@@ -1,0 +1,36 @@
+description: Test routine for Tektronix MSO58 oscilloscope to configure, capture waveform, and take screenshot.
+setup: connect signal generator to CH1 of the oscilloscope (5KHz sine wave, vpp 5V)
+
+instruments:
+  tektronix_mso58:
+    ip: "${TEKTRONIX_IP}"
+
+sequence:
+  - action: scope_configure
+    instrument: tektronix_mso58
+    trigger:
+      type: edge
+      source: CH1
+      level: 0.5
+    channels:
+      CH1:
+        scale: 1.0
+        position: 0.0
+    timebase:
+      scale: 2e-5
+      position: 0.0
+    measurements:
+      - type: vpp
+        source: CH1
+      - type: freq
+        source: CH1
+
+  - action: scope_capture
+    instrument: tektronix_mso58
+    channels: [1]
+    duration: 2e-5          
+    save_to: "capture.csv"
+
+  - action: scope_screenshot
+    instrument: tektronix_mso58
+    save_to: "screen.png"

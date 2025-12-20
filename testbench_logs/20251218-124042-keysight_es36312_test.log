@@ -1,0 +1,34 @@
+[LOG] Saving output to testbench_logs\20251218-124042-keysight_es36312_test.log
+Test file: c:\Users\s250127\RI_Batbal_Testbench\routines\keysight_es36312_test.yaml
+Start time: 2025-12-18T12:40:42.405228
+TCPIP::10.59.31.173::INSTR
+[IDN] keysight_e36312: Keysight Technologies,E36312A,MY61004948,2.1.0-1.0.4-1.12
+
+=== Starting test sequence ===
+
+Step 1: psu_configure on keysight_e36312
+  Result: {'channel': 1, 'current_limit': 0.5, 'voltage_limit': None, 'output_enabled': False, 'sense_mode': 'local'}
+
+Step 2: psu_set_power on keysight_e36312
+  Result: {'channel': 1, 'voltage': 3.0, 'current_limit': 0.5, 'ramped': True, 'ramp_time': 2.0}
+
+Step 3: psu_measure_voltage on keysight_e36312
+  Result: {'channel': 1, 'voltage': 3.000653}
+
+Step 4: psu_measure_current on keysight_e36312
+  Result: {'channel': 1, 'current': 1e-05}
+
+Step 5: psu_measure_power on keysight_e36312
+  Result: {'channel': 1, 'power': 1.8003917999999998e-05}
+
+Step 6: psu_ramp_voltage on keysight_e36312
+  Result: {'channel': 1, 'final_voltage': 1.0, 'ramp_time': 1.5}
+
+Step 7: psu_measure_voltage on keysight_e36312
+  Result: {'channel': 1, 'voltage': 1.000426}
+
+Step 8: psu_measure_current on keysight_e36312
+  Result: {'channel': 1, 'current': 1e-06}
+
+=== Test complete ===
+End time: 2025-12-18T12:40:56.778916

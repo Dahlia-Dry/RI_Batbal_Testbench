@@ -1,0 +1,137 @@
+[LOG] Saving output to testbench_logs\20251218-174253-multi_inst_test.log
+Test file: c:\Users\s250127\RI_Batbal_Testbench\routines\multi_inst_test.yaml
+Start time: 2025-12-18T17:42:53.833991
+TCPIP::10.59.31.173::INSTR
+[IDN] keysight_e36312: Keysight Technologies,E36312A,MY61004948,2.1.0-1.0.4-1.12
+TCPIP::10.59.31.190::INSTR
+[IDN] rigol_dg1062z: Rigol Technologies,DG1062Z,DG1ZA231701988,03.01.12
+Connecting to Tektronix MSO58 at 10.59.31.94...
+2025-12-18 17:43:03.114313 - Opening DeviceManager
+2025-12-18 17:43:03.115315 - Creating Connection to SCOPE 1 "SCOPE1"
+2025-12-18 17:43:03.154287 - (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+2025-12-18 17:43:03.155257 - Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+[IDN] tektronix_mso58: TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207
+
+=== Starting test sequence ===
+
+Step 1: psu_set_power on keysight_e36312
+[DEBUG] action=psu_set_power last_result=None (<class 'NoneType'>)
+  Result: {'channel': 1, 'voltage': 5.0, 'current_limit': 0.5, 'ramped': False}
+
+Step 2: wavegen_start_waveform on rigol_dg1062z
+[DEBUG] action=wavegen_start_waveform last_result={'channel': 1, 'voltage': 5.0, 'current_limit': 0.5, 'ramped': False} (<class 'dict'>)
+[RigolDG1062Z] Channel 1 waveform started.
+  Result: {'channel': 1, 'waveform': 'sine', 'frequency': 1000, 'amplitude': 2.0, 'offset': 0.0, 'impedance': 'highz', 'output_enabled': True}
+
+Step 3: scope_configure on tektronix_mso58
+[DEBUG] action=scope_configure last_result={'channel': 1, 'waveform': 'sine', 'frequency': 1000, 'amplitude': 2.0, 'offset': 0.0, 'impedance': 'highz', 'output_enabled': True} (<class 'dict'>)
+2025-12-18 17:43:03.186272 - (SCOPE 1 "SCOPE1") Write >>  'TRIGger:A:TYPe EDGE'
+2025-12-18 17:43:03.187239 - (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:LEVEL 0.0'
+2025-12-18 17:43:03.188239 - (SCOPE 1 "SCOPE1") Write >>  'TRIGGER:A:EDGE:SOURCE CH1'
+2025-12-18 17:43:03.190238 - (SCOPE 1 "SCOPE1") Write >>  'SELECT:CH1 ON'
+2025-12-18 17:43:03.191236 - (SCOPE 1 "SCOPE1") Query >>  '*IDN?'
+2025-12-18 17:43:03.206229 - Response from '*IDN?' >>  'TEKTRONIX,MSO58,C017019,CF:91.1CT FV:1.22.4.7207'
+2025-12-18 17:43:03.208226 - (SCOPE 1 "SCOPE1") Write >>  'CHCH1:SCAle 0.5'
+2025-12-18 17:43:03.209225 - (SCOPE 1 "SCOPE1") Write >>  'CHCH1:POSition 0'
+2025-12-18 17:43:03.210224 - (SCOPE 1 "SCOPE1") Write >>  'HORizontal:SCAle 1e-3'
+2025-12-18 17:43:03.211226 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS1:STATE OFF'
+2025-12-18 17:43:03.212225 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS1:DELETE'
+2025-12-18 17:43:03.213225 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS2:STATE OFF'
+2025-12-18 17:43:03.214253 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS2:DELETE'
+2025-12-18 17:43:03.216223 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS3:STATE OFF'
+2025-12-18 17:43:03.217222 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS3:DELETE'
+2025-12-18 17:43:03.218220 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS4:STATE OFF'
+2025-12-18 17:43:03.219220 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS4:DELETE'
+2025-12-18 17:43:03.220219 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS5:STATE OFF'
+2025-12-18 17:43:03.221219 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS5:DELETE'
+2025-12-18 17:43:03.222241 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS6:STATE OFF'
+2025-12-18 17:43:03.224220 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS6:DELETE'
+2025-12-18 17:43:03.225218 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS7:STATE OFF'
+2025-12-18 17:43:03.228215 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS7:DELETE'
+2025-12-18 17:43:03.229215 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS8:STATE OFF'
+2025-12-18 17:43:03.230214 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS8:DELETE'
+2025-12-18 17:43:03.232215 - (SCOPE 1 "SCOPE1") Write >>  'DISPlay:MEASurement:STATE OFF'
+2025-12-18 17:43:03.234211 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS1:TYPE PK2PK'
+2025-12-18 17:43:03.235212 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS1:SOURCE1 CH1'
+2025-12-18 17:43:03.237212 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS2:TYPE FREQUENCY'
+2025-12-18 17:43:03.238211 - (SCOPE 1 "SCOPE1") Write >>  'MEASUrement:MEAS2:SOURCE1 CH1'
+  Result: {'trigger': {'type': 'edge', 'level': 0.0, 'source': 'CH1'}, 'channels': {'CH1': {'scale': 0.5, 'position': 0}}, 'timebase': {'scale': '1e-3'}, 'measurements': [{'type': 'vpp', 'source': 'CH1'}, {'type': 'freq', 'source': 'CH1'}]}
+
+Step 4: scope_capture on tektronix_mso58
+[DEBUG] action=scope_capture last_result={'trigger': {'type': 'edge', 'level': 0.0, 'source': 'CH1'}, 'channels': {'CH1': {'scale': 0.5, 'position': 0}}, 'timebase': {'scale': '1e-3'}, 'measurements': [{'type': 'vpp', 'source': 'CH1'}, {'type': 'freq', 'source': 'CH1'}]} (<class 'dict'>)
+2025-12-18 17:43:03.241207 - (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STATE OFF'
+2025-12-18 17:43:03.243232 - (SCOPE 1 "SCOPE1") Write >>  'ACQuire:MODe SAMPLE'
+2025-12-18 17:43:03.244207 - (SCOPE 1 "SCOPE1") Write >>  'ACQuire:STOPAfter SEQUENCE'
+2025-12-18 17:43:03.244207 - (SCOPE 1 "SCOPE1") Write >>  'HOR:MODE MANUAL'
+2025-12-18 17:43:03.246203 - (SCOPE 1 "SCOPE1") Write >>  'HOR:MAIN:SCALE 0.01'
+Acquiring ch CH1
+2025-12-18 17:43:03.249201 - (SCOPE 1 "SCOPE1") Write >>  'DATA:SOURCE CHCH1'
+2025-12-18 17:43:03.250201 - (SCOPE 1 "SCOPE1") Write >>  'DATA:ENC SRIbinary'
+2025-12-18 17:43:03.251200 - (SCOPE 1 "SCOPE1") Write >>  'DATA:WIDTH 2'
+2025-12-18 17:43:03.252200 - (SCOPE 1 "SCOPE1") Write >>  'ACQ:STOPAfter SEQ'
+2025-12-18 17:43:03.253201 - (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE ON'
+2025-12-18 17:43:03.254199 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:03.552056 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:03.652998 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:03.653969 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:03.754946 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:03.755945 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:03.857914 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:03.858886 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:03.960470 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:03.962047 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:04.063042 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:04.063995 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:04.165977 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:04.167934 - Response from 'ACQ:STATE?' >>  '1'
+2025-12-18 17:43:04.268921 - (SCOPE 1 "SCOPE1") Query >>  'ACQ:STATE?'
+2025-12-18 17:43:04.270876 - Response from 'ACQ:STATE?' >>  '0'
+2025-12-18 17:43:04.270876 - (SCOPE 1 "SCOPE1") Write >>  'ACQ:STATE OFF'
+2025-12-18 17:43:04.322892 - (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YMULT?'
+2025-12-18 17:43:04.387455 - Response from 'WFMPRE:YMULT?' >>  '100.0000E-6'
+2025-12-18 17:43:04.388455 - (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YOFF?'
+2025-12-18 17:43:04.392454 - Response from 'WFMPRE:YOFF?' >>  '0.0E+0'
+2025-12-18 17:43:04.393455 - (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:YZERO?'
+2025-12-18 17:43:04.396453 - Response from 'WFMPRE:YZERO?' >>  '5.0000E-3'
+2025-12-18 17:43:04.396453 - (SCOPE 1 "SCOPE1") Query >>  'WFMPRE:XINCR?'
+2025-12-18 17:43:04.403476 - Response from 'WFMPRE:XINCR?' >>  '3.20E-9'
+2025-12-18 17:43:04.404477 - (SCOPE 1 "SCOPE1") Write >>  'CURVE?'
+2025-12-18 17:43:12.059919 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS1:TYPE?'
+2025-12-18 17:43:12.061919 - Response from 'MEASUrement:MEAS1:TYPE?' >>  'PK2PK'
+2025-12-18 17:43:12.062917 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS1:VALue?'
+2025-12-18 17:43:12.063917 - Response from 'MEASUrement:MEAS1:VALue?' >>  '2.05350'
+2025-12-18 17:43:12.063917 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS2:TYPE?'
+2025-12-18 17:43:12.065915 - Response from 'MEASUrement:MEAS2:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.066941 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS2:VALue?'
+2025-12-18 17:43:12.067916 - Response from 'MEASUrement:MEAS2:VALue?' >>  '10.0000082318645E+3'
+2025-12-18 17:43:12.068915 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS3:TYPE?'
+2025-12-18 17:43:12.070914 - Response from 'MEASUrement:MEAS3:TYPE?' >>  'MINIMUM'
+2025-12-18 17:43:12.070914 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS3:VALue?'
+2025-12-18 17:43:12.071914 - Response from 'MEASUrement:MEAS3:VALue?' >>  '-1.02450'
+2025-12-18 17:43:12.072942 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS4:TYPE?'
+2025-12-18 17:43:12.073943 - Response from 'MEASUrement:MEAS4:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.074934 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS4:VALue?'
+2025-12-18 17:43:12.075909 - Response from 'MEASUrement:MEAS4:VALue?' >>  '10.0000082318645E+3'
+2025-12-18 17:43:12.075909 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS5:TYPE?'
+2025-12-18 17:43:12.077912 - Response from 'MEASUrement:MEAS5:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.077912 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS5:VALue?'
+2025-12-18 17:43:12.078908 - Response from 'MEASUrement:MEAS5:VALue?' >>  '10.0000082318645E+3'
+2025-12-18 17:43:12.079908 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS6:TYPE?'
+2025-12-18 17:43:12.080908 - Response from 'MEASUrement:MEAS6:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.081907 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS6:VALue?'
+2025-12-18 17:43:12.082906 - Response from 'MEASUrement:MEAS6:VALue?' >>  '10.0000082318645E+3'
+2025-12-18 17:43:12.083906 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS7:TYPE?'
+2025-12-18 17:43:12.084905 - Response from 'MEASUrement:MEAS7:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.085904 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS7:VALue?'
+2025-12-18 17:43:12.086904 - Response from 'MEASUrement:MEAS7:VALue?' >>  '10.0000082318645E+3'
+2025-12-18 17:43:12.087903 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS8:TYPE?'
+2025-12-18 17:43:12.088902 - Response from 'MEASUrement:MEAS8:TYPE?' >>  'FREQUENCY'
+2025-12-18 17:43:12.088902 - (SCOPE 1 "SCOPE1") Query >>  'MEASUrement:MEAS8:VALue?'
+2025-12-18 17:43:12.090901 - Response from 'MEASUrement:MEAS8:VALue?' >>  '10.0000082318645E+3'
+  Result: {'channels': ['CH1'], 'duration': 0.01, 'file': 'results/sine_capture.csv', 'num_channels': 1, 'samples_per_channel': {'CH1': 1000000}, 'measurements': {'pk2pk': 2.0535, 'frequency': 10000.0082318645, 'minimum': -1.0245}}
+
+=== Test complete ===
+End time: 2025-12-18T17:43:12.094899
+2025-12-18 17:43:12.097897 - Closing Connections to Devices
+2025-12-18 17:43:12.098896 - Closing Connection to SCOPE 1 "SCOPE1"
+2025-12-18 17:43:12.098896 - DeviceManager Closed

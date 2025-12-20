@@ -1,0 +1,20 @@
+[LOG] Saving output to testbench_logs\20251218-122837-rigol_dg1062z_test.log
+Test file: c:\Users\s250127\RI_Batbal_Testbench\routines\rigol_dg1062z_test.yaml
+Start time: 2025-12-18T12:28:37.338280
+TCPIP::10.59.31.190::INSTR
+[IDN] rigol_dg1062z: Rigol Technologies,DG1062Z,DG1ZA231701988,03.01.12
+
+=== Starting test sequence ===
+
+Step 1: wavegen_start_waveform on rigol_dg1062z
+[RigolDG1062Z] Channel 1 waveform started.
+  Result: {'channel': 1, 'waveform': 'sine', 'frequency': 1000000, 'amplitude': 2.0, 'offset': 0.0, 'impedance': None, 'output_enabled': True}
+
+Step 2: wavegen_configure_output on rigol_dg1062z
+  Result: {'channel': 1, 'impedance': 'highz', 'output_enabled': None}
+
+Step 3: wavegen_stop_waveform on rigol_dg1062z
+  Result: {'channel': 1, 'impedance': None, 'output_enabled': False}
+
+=== Test complete ===
+End time: 2025-12-18T12:28:38.498226

@@ -1,0 +1,31 @@
+description: Test routine for Keithley 2450 SMU to perform an I-V sweep from 0 V to 3.3 V in 0.1 V steps while measuring current.
+instruments:
+  keithley_2450:
+    ip: "${KEITHLEY_IP}"
+
+sequence:
+  # 1. reset SMU to default state
+  - action: smu_reset
+    instrument: keithley_2450
+
+  # 2. configure SMU for voltage sourcing and current measurement
+  - action: smu_configure
+    instrument: keithley_2450
+    source_function: voltage
+    source_level: 0.0
+    compliance_limit: 0.05
+    measure_function: current
+    output_enabled: true
+
+  # 3. perform an I-V sweep from 0 V to 3.3 V in 0.1 V steps
+  - action: smu_sweep
+    instrument: keithley_2450
+    start: 0.0
+    stop: 3.3
+    step: 0.1
+    delay: 0.05
+    save_to: results/iv_sweep.csv
+
+  # 4. disable SMU output
+  - action: smu_zero_output
+    instrument: keithley_2450
