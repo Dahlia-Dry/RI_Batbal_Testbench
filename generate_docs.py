@@ -8,8 +8,10 @@ The Keysight E36312 is a triple-output programmable DC power supply capable of d
 It provides stable voltage and current outputs for powering electronic circuits and devices under test.
 
 Connection via LAN is supported. Example configuration: 
-``` rigol_dg1062z:
-        ip: "<rigol_lan_ip>"
+``` yaml
+    instruments:
+        rigol_dg1062z:
+            ip: "<rigol_lan_ip>"
 ```
 
 [Manual](manuals/keysight-e36312.md)
@@ -19,8 +21,10 @@ The Keithley 2450 is a Source Measure Unit (SMU) that combines precision voltage
 It excels in I-V characterization, semiconductor testing, and materials research requiring both sourcing and sensing.
 
 Connection via LAN is supported. Example configuration: 
-``` keithley_2450:
-        ip: "<keithley_lan_ip>"
+``` yaml
+    instruments:
+        keithley_2450:
+            ip: "<keithley_lan_ip>"
 ```
 
 [Manual](manuals/keithley-2450.md)
@@ -30,8 +34,10 @@ The Rigol DG1062Z is a dual-channel function/arbitrary waveform generator with f
 It generates various waveforms including sine, square, ramp, and arbitrary shapes for signal generation and testing.
 
 Connection via LAN is supported. Example configuration: 
-``` rigol_dg1062z:
-        ip: "<rigol_lan_ip>"
+``` yaml
+    instruments:
+        rigol_dg1062z:
+            ip: "<rigol_lan_ip>"
 ```
 
 [Manual](manuals/rigol-dg1062z.md)
@@ -41,8 +47,10 @@ The Tektronix MSO58 is a 8-channel mixed signal oscilloscope with 1 GHz bandwidt
 It captures and analyzes analog and digital signals simultaneously, with advanced triggering and measurement capabilities.
 
 Connection via LAN is supported. Example configuration: 
-``` tektronix_mso58:
-        ip: "<tektronix_lan_ip>"
+``` yaml
+    instruments:
+        tektronix_mso58:
+            ip: "<tektronix_lan_ip>"
 ```
 
 [Manual](manuals/tektronix-mso58.pdf)
@@ -54,8 +62,10 @@ It provides a compact solution for mixed-signal test and measurement application
 Connection via LAN is supported. 
 **Note**: The NI VirtualBench is configured using the hostname, not the LAN IP address.
 Example configuration: 
-``` ni_virtualbench:
-        ip: "<ni_virtualbench_hostname>"
+``` yaml
+    instruments:
+        ni_virtualbench:
+            ip: "<ni_virtualbench_hostname>"
 ```
 
 [Manual](manuals/ni-virtualbench.md)

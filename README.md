@@ -13,6 +13,14 @@ Key features:
 - Automatic documentation generation
 - Support for delays and conditional execution
 
+### Current Status
+ - Minimum viable product achieved
+ - All tests in routines folder passed
+
+### Future Improvement Suggestions:
+ - more efficient step dispatching in [step_dispatcher](instruments/step_dispatcher.py): current implementation is clunky, but works. 
+ - support for more modules of the NI TestBench: pymeasure proved quite a difficult library to work with. The NI TestBench currently only includes support for Digital IO and PSU, but other modes (MSO, Wave Generator) are also possible.
+ - extending scripting support so that access to result variables is not just limited to the last action performed
 
 ## Installation
 
@@ -111,8 +119,9 @@ The framework follows a modular architecture with the intent of enabling maximum
 
 ### Top Level: YAML Routines and Action Schema
 
-Test routines are defined in human-readable `.yaml` files stored in the `routines/` directory. Each routine specifies:
+Test routines are defined in human-readable `.yaml` files stored in the `routines/` directory. A template routine `.yaml` file can be found [here](routines/template.yaml).Each routine specifies: 
 
+- **Description**: (optional) summary of the test actions
 - **Instrument connections**: IP addresses or identifiers for each instrument used in the test. An example instrument connection section is as follows:
     ```yaml
         instruments:
@@ -148,12 +157,10 @@ The [step_dispatcher](instruments/step_dispatcher.py) module is the core executi
 - Parses step configurations from YAML routines, validating parameters against the action schema
 - Resolves variable substitutions (e.g., `$last` references) to enable dynamic data flow between steps
 - Dispatches actions to appropriate instrument methods based on the instrument type and action name
-- Handles delays and error conditions gracefully, with comprehensive logging
+- Handles delays and error conditions with comprehensive logging
 - Returns results for use in subsequent steps, enabling complex test sequences
 
 The dispatcher uses a type coercion system to ensure parameter compatibility and includes robust error handling to provide clear feedback when tests fail.
-
-### 
 
 ### Instrument Classes
 
@@ -161,11 +168,11 @@ Instrument-specific functionality is encapsulated in classes inheriting from a c
 
 **Note**: All instruments in the framework assume LAN (Ethernet) connectivity using TCP/IP communication. Instruments must be configured for network access and reachable via their specified IP addresses.
 
-The modular design enables researchers to focus on test logic rather than low-level instrument communication details.
+All methods within the instrument classes that map to an action in the [action schema](actions_schema.yaml) return a dictionary containing any relevant result information. This is useful both for logging purposes and to provide the possibility for using results from one step later in the test sequence.
 
 ### Environment Variables
 
-The framework uses environment variables to securely manage instrument network configuration. This approach keeps sensitive information like IP addresses out of version control while allowing easy sharing of test routines.
+The framework uses environment variables to securely manage instrument network configuration. 
 
 **Variable Substitution**: YAML routine files use `${VAR_NAME}` syntax for environment variable substitution. At runtime, these placeholders are replaced with actual values from the environment.
 
@@ -176,13 +183,13 @@ The framework uses environment variables to securely manage instrument network c
 - `KEYSIGHT_IP`: IP address of the Keysight E36312 power supply  
 - `RIGOL_IP`: IP address of the Rigol DG1062Z function generator
 - `TEKTRONIX_IP`: IP address of the Tektronix MSO58 oscilloscope
-- `NI_VB_IP`: Hostname/IP of the NI VirtualBench
+- `NI_VB_HOSTNAME`: Hostname of the NI VirtualBench
 
 **Setup**: Copy `.env.example` to `.env` and update with your actual instrument addresses. The framework will load these automatically when running tests.
 
 ## Customization
 
-### Scripting with $last
+### Using previous results in subsequent actions
 
 Steps can reference results from previous steps using `$last` syntax:
 
@@ -202,9 +209,13 @@ sequence:
       level: $last.voltage  # Use measured voltage as trigger level
 ```
 
+### Scripting
+
+To further boost customizability, support exists for a python script to be inserted and run in the middle of a test sequence. An example of this is shown in the test routine [script_example.yaml](routines/script_example.yaml). The implementation of this functionality can be found in the [step_dispatcher](instruments/step_dispatcher.py) module, and a python script template can be found [here](scripts/script_template.py). The script gets `input_data` as a global variable containing the result output dictionary from the previous action step, and must define a dict `OUTPUT` containing the results to be accessed by the next action step.
+
 ### Delays
 
-Add timing controls to steps:
+Timing control can also be added to action steps using either `delay_before` or `delay_after`. For example:
 
 ```yaml
 sequence:
@@ -272,7 +283,7 @@ KEITHLEY_IP_1=<keithley.ip.1>
 KEITHLEY_IP_2=<keithley.ip.2>
 ```
 
-This approach enables complex test scenarios requiring multiple identical instruments, such as differential measurements, load sharing, or parallel testing.
+This approach enables complex test scenarios requiring multiple identical instruments.
 
 ## Adding New Instruments/Actions
 
@@ -280,7 +291,7 @@ To add support for a new instrument or action:
 
 1. **Create Instrument Class**: In `instruments/`, create a new class inheriting from `Instrument` or appropriate base class.
 
-2. **Implement Methods**: Add methods for each supported action, following the naming convention from the schema.
+2. **Implement Methods**: Add methods for each supported action. For clarity, it is recommended to follow the naming convention from the schema: <inst>_<action>
 
 3. **Update Registry**: Add the new class to `INSTRUMENT_CLASSES` in `instrument_registry.py`.
 
@@ -294,7 +305,7 @@ To add support for a new instrument or action:
 
 ## Documentation Generation
 
-The `generate_docs.py` script automatically generates comprehensive documentation:
+The `generate_docs.py` script automatically generates and updates documentation:
 
 - Parses `actions_schema.yaml` for action definitions
 - Extracts parameter information, types, enums, and descriptions
@@ -312,8 +323,10 @@ The Keysight E36312 is a triple-output programmable DC power supply capable of d
 It provides stable voltage and current outputs for powering electronic circuits and devices under test.
 
 Connection via LAN is supported. Example configuration: 
-``` rigol_dg1062z:
-        ip: "<rigol_lan_ip>"
+``` yaml
+    instruments:
+        rigol_dg1062z:
+            ip: "<rigol_lan_ip>"
 ```
 
 [Manual](manuals/keysight-e36312.md)
@@ -418,8 +431,10 @@ The Keithley 2450 is a Source Measure Unit (SMU) that combines precision voltage
 It excels in I-V characterization, semiconductor testing, and materials research requiring both sourcing and sensing.
 
 Connection via LAN is supported. Example configuration: 
-``` keithley_2450:
-        ip: "<keithley_lan_ip>"
+``` yaml
+    instruments:
+        keithley_2450:
+            ip: "<keithley_lan_ip>"
 ```
 
 [Manual](manuals/keithley-2450.md)
@@ -560,8 +575,10 @@ The Rigol DG1062Z is a dual-channel function/arbitrary waveform generator with f
 It generates various waveforms including sine, square, ramp, and arbitrary shapes for signal generation and testing.
 
 Connection via LAN is supported. Example configuration: 
-``` rigol_dg1062z:
-        ip: "<rigol_lan_ip>"
+``` yaml
+    instruments:
+        rigol_dg1062z:
+            ip: "<rigol_lan_ip>"
 ```
 
 [Manual](manuals/rigol-dg1062z.md)
@@ -636,8 +653,10 @@ The Tektronix MSO58 is a 8-channel mixed signal oscilloscope with 1 GHz bandwidt
 It captures and analyzes analog and digital signals simultaneously, with advanced triggering and measurement capabilities.
 
 Connection via LAN is supported. Example configuration: 
-``` tektronix_mso58:
-        ip: "<tektronix_lan_ip>"
+``` yaml
+    instruments:
+        tektronix_mso58:
+            ip: "<tektronix_lan_ip>"
 ```
 
 [Manual](manuals/tektronix-mso58.pdf)
@@ -732,8 +751,10 @@ It provides a compact solution for mixed-signal test and measurement application
 Connection via LAN is supported. 
 **Note**: The NI VirtualBench is configured using the hostname, not the LAN IP address.
 Example configuration: 
-``` ni_virtualbench:
-        ip: "<ni_virtualbench_hostname>"
+``` yaml
+    instruments:
+        ni_virtualbench:
+            ip: "<ni_virtualbench_hostname>"
 ```
 
 [Manual](manuals/ni-virtualbench.md)
