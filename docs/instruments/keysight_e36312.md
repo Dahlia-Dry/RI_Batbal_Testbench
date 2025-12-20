@@ -3,6 +3,11 @@
 The Keysight E36312 is a triple-output programmable DC power supply capable of delivering up to 6V/5A, ±25V/1A, and ±25V/1A. 
 It provides stable voltage and current outputs for powering electronic circuits and devices under test.
 
+Connection via LAN is supported. Example configuration: 
+``` rigol_dg1062z:
+        ip: "<rigol_lan_ip>"
+```
+
 [Manual](manuals/keysight-e36312.md)
 
 ## psu_configure

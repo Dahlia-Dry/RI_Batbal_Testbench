@@ -3,6 +3,11 @@
 The Rigol DG1062Z is a dual-channel function/arbitrary waveform generator with frequencies up to 60 MHz. 
 It generates various waveforms including sine, square, ramp, and arbitrary shapes for signal generation and testing.
 
+Connection via LAN is supported. Example configuration: 
+``` rigol_dg1062z:
+        ip: "<rigol_lan_ip>"
+```
+
 [Manual](manuals/rigol-dg1062z.md)
 
 ## wavegen_configure

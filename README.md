@@ -67,65 +67,65 @@ This section provides example test routines demonstrating the framework's capabi
 
 This example demonstrates basic source-measure unit (SMU) operation by performing an I-V sweep on the Keithley 2450. It configures the instrument for voltage sourcing and current measurement, sweeps voltage from 0V to 3.3V in 0.1V steps, and saves the resulting current measurements to a CSV file for analysis.
 
-[Routine File](routines/keithley_2450_test.yaml) | [Results](results/iv_sweep.csv) | [Logs](testbench_logs/)
+[Routine File](routines/keithley_2450_test.yaml) | [Results](results/iv_sweep.csv) | [Successful Logfile](testbench_logs/20251220-104439-keithley_2450_test.log)
 
 ### keysight_es36312_test
 
 This routine shows how to control a programmable DC power supply. It configures the Keysight E36312 to set specific voltage and current limits, enables the output, measures the actual output values, and then safely disables the output.
 
-[Routine File](routines/keysight_es36312_test.yaml) | [Logs](testbench_logs/)
+[Routine File](routines/keysight_es36312_test.yaml) | [Successful Logfile](testbench_logs/20251218-124042-keysight_es36312_test.log)
 
 ### multi_inst_test
 
-This example demonstrates coordinated multi-instrument operation. It simultaneously controls a Keithley 2450 SMU for I-V characterization, a Keysight E36312 power supply for device biasing, and a Tektronix MSO58 oscilloscope for waveform monitoring, illustrating the framework's ability to synchronize multiple instruments in a single test sequence.
+This example demonstrates multi-instrument operation. It simultaneously controls a Keithley 2450 SMU for I-V characterization, a Keysight E36312 power supply for device biasing, and a Tektronix MSO58 oscilloscope for waveform monitoring.
 
-[Routine File](routines/multi_inst_test.yaml) | [Logs](testbench_logs/)
+[Routine File](routines/multi_inst_test.yaml) | [Successful Logfile](testbench_logs/20251218-174253-multi_inst_test.log)
 
 ### ni_vb_test
 
-This example illustrates digital I/O and analog functionality using the NI VirtualBench. It configures digital I/O pins for output, sets analog output voltages, reads back analog input values, and demonstrates basic digital control operations.
+This example illustrates basic digital I/O functionality using the NI VirtualBench. It configures digital I/O pins for output, sets digital output voltages, and reads back the values from each selected pin.
 
-[Routine File](routines/ni_vb_test.yaml) | [Logs](testbench_logs/)
+[Routine File](routines/ni_vb_test.yaml) | [Successful Logfile](testbench_logs/20251218-172813-ni_vb_test.log)
 
 ### rigol_dg1062z_test
 
-This routine demonstrates function generator control with the Rigol DG1062Z. It starts a waveform output, dynamically changes the output impedance settings, and then stops the waveform, showing how to control signal generation parameters programmatically.
+This routine demonstrates function generator control with the Rigol DG1062Z. It starts a waveform output, dynamically changes the output impedance settings, and then stops the waveform.
 
-[Routine File](routines/rigol_dg1062z_test.yaml) | [Logs](testbench_logs/)
+[Routine File](routines/rigol_dg1062z_test.yaml) | [Successful Logfile](testbench_logs/20251218-122837-rigol_dg1062z_test.log)
 
 ### script_example
 
-This example demonstrates the framework's scripting capabilities by generating a sine wave with the Rigol function generator, capturing it with the Tektronix oscilloscope, validating the captured waveform data using a custom Python script (validate_waveform.py), and setting a DIO pin on the NI VirtualBench based on the validation result (pass/fail).
+This example demonstrates the framework's scripting capabilities by generating a sine wave with the Rigol function generator, capturing it with the Tektronix oscilloscope, validating the captured waveform data using a custom Python [script](scripts/validate_waveform.py), and setting a DIO pin on the NI VirtualBench based on the validation result (pass/fail).
 
-[Routine File](routines/script_example.yaml) | [Results](results/wave_capture.csv) | [Logs](testbench_logs/)
+[Routine File](routines/script_example.yaml) | [Results](results/wave_capture.csv) | [Successful Logfile](testbench_logs/20251218-174048-script_example.log)
 
 ### tektronix_mso58_test
 
-This oscilloscope example shows waveform acquisition and analysis. It configures the Tektronix MSO58 with appropriate trigger settings, channel scaling, and measurement parameters, captures waveform data to a CSV file, and takes a screenshot for visual verification.
+This oscilloscope example shows waveform acquisition and analysis. It configures the Tektronix MSO58 with appropriate trigger settings, channel scaling, and measurement parameters for an externally set signal, captures waveform data to a CSV file, and takes a screenshot for visual verification.
 
-[Routine File](routines/tektronix_mso58_test.yaml) | [Results](capture.csv) | [Logs](testbench_logs/)
+[Routine File](routines/tektronix_mso58_test.yaml) | [Results](capture.csv) | [Successful Logfile](testbench_logs/20251218-162323-tektronix_mso58_test.log)
 
 ## Architecture
 
-The framework follows a modular architecture designed for extensibility and maintainability in laboratory automation. At its core, it separates concerns between test definition, execution logic, and instrument-specific implementations.
+The framework follows a modular architecture with the intent of enabling maximum ease of use while also allowing for extensibility and maintainability. It attempts to clearly separate test definition, execution logic, and instrument-specific implementations such that it is straightforward to modify and extend for future users.
 
-### Step Dispatcher
+### Top Level: YAML Routines and Action Schema
 
-The `step_dispatcher.py` module is the core execution engine that interprets and runs individual test steps. It serves as the central coordinator that:
+Test routines are defined in human-readable `.yaml` files stored in the `routines/` directory. Each routine specifies:
 
-- Parses step configurations from YAML routines, validating parameters against the action schema
-- Resolves variable substitutions (e.g., `$last` references) to enable dynamic data flow between steps
-- Dispatches actions to appropriate instrument methods based on the instrument type and action name
-- Handles delays and error conditions gracefully, with comprehensive logging
-- Returns results for use in subsequent steps, enabling complex test sequences
+- **Instrument connections**: IP addresses or identifiers for each instrument used in the test. An example instrument connection section is as follows:
+    ```yaml
+        instruments:
+            rigol_dg1062z:
+                ip: "${RIGOL_IP}"
 
-The dispatcher uses a type coercion system to ensure parameter compatibility and includes robust error handling to provide clear feedback when tests fail.
+            tektronix_mso58:
+                ip: "${TEKTRONIX_IP}"
 
-### YAML Routines and Action Schema
+            ni_virtualbench:
+                ip: "${NI_VB_HOSTNAME}"
 
-Test routines are defined in human-readable YAML files stored in the `routines/` directory. Each routine specifies:
-
-- **Instrument connections**: IP addresses or identifiers for each instrument used in the test
+    ```
 - **Sequence of steps**: Each step contains:
   - `action`: The specific operation to perform (drawn from the centralized action schema)
   - `instrument`: Which configured instrument instance to target
@@ -138,6 +138,22 @@ The `actions_schema.yaml` file serves as the single source of truth for all supp
 - Schema-driven documentation generation
 - Consistent action interfaces across instruments
 - Easy addition of new actions without code changes
+
+### YAML Parser and Step Dispatcher
+
+The main execution script [run_test.py](run_test.py) serves as a tool for executing the instructions in a `.yaml` test file via the command line. It is kept as lean as possible with only a few command line arguments detailed in the Usage section above, allowing for most of the customization to be done within the more human-readable `.yaml` files.
+
+The [step_dispatcher](instruments/step_dispatcher.py) module is the core execution engine that interprets and runs individual test steps. It serves as the central coordinator that:
+
+- Parses step configurations from YAML routines, validating parameters against the action schema
+- Resolves variable substitutions (e.g., `$last` references) to enable dynamic data flow between steps
+- Dispatches actions to appropriate instrument methods based on the instrument type and action name
+- Handles delays and error conditions gracefully, with comprehensive logging
+- Returns results for use in subsequent steps, enabling complex test sequences
+
+The dispatcher uses a type coercion system to ensure parameter compatibility and includes robust error handling to provide clear feedback when tests fail.
+
+### 
 
 ### Instrument Classes
 
@@ -266,13 +282,15 @@ To add support for a new instrument or action:
 
 2. **Implement Methods**: Add methods for each supported action, following the naming convention from the schema.
 
-3. **Define Actions**: Add action definitions to `actions_schema.yaml` with parameters, types, and descriptions.
+3. **Update Registry**: Add the new class to `INSTRUMENT_CLASSES` in `instrument_registry.py`.
 
-4. **Add Action Dispatch**: In `step_dispatcher.py`, add an `elif action == "new_action":` block to call the instrument method with parameters.
+4. **Define Actions**: Add action definitions to `actions_schema.yaml` with parameters, types, and descriptions.
 
-5. **Test Implementation**: Create a test routine in `routines/` and verify functionality.
+5. **Add Action Dispatch**: In `step_dispatcher.py`, add an `elif action == "new_action":` block to call the instrument method with parameters.
 
-6. **Update Documentation**: Run `python generate_docs.py` to regenerate instrument documentation.
+6. **Test Implementation**: Create a test routine in `routines/` and verify functionality.
+
+7. **Update Documentation**: Run `python generate_docs.py` to regenerate instrument documentation.
 
 ## Documentation Generation
 
@@ -288,12 +306,17 @@ Run `python generate_docs.py` after schema changes to keep documentation current
 
 ## Supported Instruments and Actions
 
-### Keysight E36312
+### keysight_e36312
 
 The Keysight E36312 is a triple-output programmable DC power supply capable of delivering up to 6V/5A, ±25V/1A, and ±25V/1A. 
 It provides stable voltage and current outputs for powering electronic circuits and devices under test.
 
-[Manual](manuals/keysight_e36312.md)
+Connection via LAN is supported. Example configuration: 
+``` rigol_dg1062z:
+        ip: "<rigol_lan_ip>"
+```
+
+[Manual](manuals/keysight-e36312.md)
 
 #### psu_configure
 
@@ -306,7 +329,7 @@ Configure baseline PSU channel settings.
 | channel | int | yes | - | Power supply channel number (1-3) |
 | current_limit | float | no | - | Current limit in amperes |
 | voltage_limit | float | no | - | Voltage limit in volts |
-| output_enabled | bool | no | false | Whether to enable the output after configuration |
+| output_enabled | bool | no | False | Whether to enable the output after configuration |
 | sense_mode | string | no | local | Sense mode for measurements Allowed values: `local`, `remote` |
 
 ##### Returns
@@ -388,12 +411,18 @@ Measure PSU output power.
 
 Type: dict
 
-### Keithley 2450
+
+### keithley_2450
 
 The Keithley 2450 is a Source Measure Unit (SMU) that combines precision voltage/current sourcing with high-accuracy measurement capabilities. 
 It excels in I-V characterization, semiconductor testing, and materials research requiring both sourcing and sensing.
 
-[Manual](manuals/keithley_2450.md)
+Connection via LAN is supported. Example configuration: 
+``` keithley_2450:
+        ip: "<keithley_lan_ip>"
+```
+
+[Manual](manuals/keithley-2450.md)
 
 #### smu_configure
 
@@ -408,7 +437,7 @@ Configure baseline SMU source and measurement settings.
 | compliance_limit | float | yes | - | Compliance limit (A when sourcing voltage, V when sourcing current). |
 | measure_function | string | yes | - | Measurement function (voltage or current) Allowed values: `voltage`, `current` |
 | sense_mode | string | no | 2w | Sensing mode (2-wire or 4-wire) Allowed values: `2w`, `4w` |
-| output_enabled | bool | no | false | Whether to enable output after configuration |
+| output_enabled | bool | no | False | Whether to enable output after configuration |
 
 ##### Returns
 
@@ -447,7 +476,7 @@ Convenience action to set SMU source level and compliance.
 | source_function | string | yes | - | Source function (voltage or current) Allowed values: `voltage`, `current` |
 | level | float | yes | - | Source level value |
 | compliance_limit | float | yes | - | Compliance limit value |
-| output_enabled | bool | no | true | Whether to enable output after setting |
+| output_enabled | bool | no | True | Whether to enable output after setting |
 
 ##### Returns
 
@@ -506,7 +535,7 @@ Properties:
 | Name | Type |
 |------|------|
 | points | list |
-| file | string | Path to saved CSV file (if saved). |
+| file | string |
 
 #### smu_reset
 
@@ -524,12 +553,18 @@ Set source level to zero and disable output.
 
 Type: dict
 
-### Rigol DG1062Z
+
+### rigol_dg1062z
 
 The Rigol DG1062Z is a dual-channel function/arbitrary waveform generator with frequencies up to 60 MHz. 
 It generates various waveforms including sine, square, ramp, and arbitrary shapes for signal generation and testing.
 
-[Manual](manuals/rigol_dg1062z.md)
+Connection via LAN is supported. Example configuration: 
+``` rigol_dg1062z:
+        ip: "<rigol_lan_ip>"
+```
+
+[Manual](manuals/rigol-dg1062z.md)
 
 #### wavegen_configure
 
@@ -541,7 +576,7 @@ Configure waveform generator output settings.
 |------|------|----------|---------|-------------|
 | channel | int | yes | - | Waveform generator channel number |
 | impedance | string | no | - | Output load impedance Allowed values: `50ohm`, `highz` |
-| enabled | bool | no | - | Enable waveform output |
+| enabled | bool | no | - | Enable or disable waveform output. |
 
 ##### Returns
 
@@ -594,12 +629,18 @@ Properties:
 | channel | int |
 | output_enabled | bool |
 
-### Tektronix MSO58
+
+### tektronix_mso58
 
 The Tektronix MSO58 is a 8-channel mixed signal oscilloscope with 1 GHz bandwidth and 6.25 GS/s sample rate. 
 It captures and analyzes analog and digital signals simultaneously, with advanced triggering and measurement capabilities.
 
-[Manual](manuals/tektronix_mso58.pdf)
+Connection via LAN is supported. Example configuration: 
+``` tektronix_mso58:
+        ip: "<tektronix_lan_ip>"
+```
+
+[Manual](manuals/tektronix-mso58.pdf)
 
 #### scope_configure
 
@@ -640,6 +681,7 @@ Capture waveform from oscilloscope and save to CSV.
 | channels | list | yes | - | List of channels to capture (e.g. ['CH1', 'CH2']) |
 | duration | float | yes | - | Duration of capture in seconds |
 | save_to | string | yes | - | Path where the CSV file will be saved |
+| show_plot | bool | no | False | Display a simple plot of the captured waveform |
 
 ##### Returns
 
@@ -656,7 +698,7 @@ Properties:
 | file | string |
 | num_channels | int |
 | samples_per_channel | dict |
-| measurements | dict | Retrieved oscilloscope measurement values. |
+| measurements | dict |
 
 #### scope_screenshot
 
@@ -678,15 +720,23 @@ Properties:
 
 | Name | Type |
 |------|------|
-| file | string | Path to the saved screenshot file. |
-| colors | string | Color mode used for the screenshot. |
+| file | string |
+| colors | string |
 
-### NI VirtualBench
+
+### ni_virtualbench
 
 The NI VirtualBench is a modular all-in-one instrument that combines oscilloscope, function generator, power supply, and digital I/O capabilities. 
 It provides a compact solution for mixed-signal test and measurement applications.
 
-[Manual](manuals/ni_virtualbench.md)
+Connection via LAN is supported. 
+**Note**: The NI VirtualBench is configured using the hostname, not the LAN IP address.
+Example configuration: 
+``` ni_virtualbench:
+        ip: "<ni_virtualbench_hostname>"
+```
+
+[Manual](manuals/ni-virtualbench.md)
 
 #### vb_psu_configure
 
@@ -699,7 +749,7 @@ Configure VirtualBench PSU channel settings.
 | channel | int | yes | - | PSU channel number |
 | voltage | float | no | - | Voltage setting in volts |
 | current_limit | float | no | - | Current limit in amperes |
-| output_enabled | bool | no | false |  |
+| output_enabled | bool | no | False |  |
 
 ##### Returns
 

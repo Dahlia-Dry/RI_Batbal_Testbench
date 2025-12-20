@@ -3,6 +3,11 @@
 The Keithley 2450 is a Source Measure Unit (SMU) that combines precision voltage/current sourcing with high-accuracy measurement capabilities. 
 It excels in I-V characterization, semiconductor testing, and materials research requiring both sourcing and sensing.
 
+Connection via LAN is supported. Example configuration: 
+``` keithley_2450:
+        ip: "<keithley_lan_ip>"
+```
+
 [Manual](manuals/keithley-2450.md)
 
 ## smu_configure

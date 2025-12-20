@@ -3,6 +3,13 @@
 The NI VirtualBench is a modular all-in-one instrument that combines oscilloscope, function generator, power supply, and digital I/O capabilities. 
 It provides a compact solution for mixed-signal test and measurement applications.
 
+Connection via LAN is supported. 
+**Note**: The NI VirtualBench is configured using the hostname, not the LAN IP address.
+Example configuration: 
+``` ni_virtualbench:
+        ip: "<ni_virtualbench_hostname>"
+```
+
 [Manual](manuals/ni-virtualbench.md)
 
 ## vb_psu_configure

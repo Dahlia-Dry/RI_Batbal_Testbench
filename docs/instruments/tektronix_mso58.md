@@ -3,6 +3,11 @@
 The Tektronix MSO58 is a 8-channel mixed signal oscilloscope with 1 GHz bandwidth and 6.25 GS/s sample rate. 
 It captures and analyzes analog and digital signals simultaneously, with advanced triggering and measurement capabilities.
 
+Connection via LAN is supported. Example configuration: 
+``` tektronix_mso58:
+        ip: "<tektronix_lan_ip>"
+```
+
 [Manual](manuals/tektronix-mso58.pdf)
 
 ## scope_configure
