@@ -3,3 +3,4 @@ armstrap-pyvirtualbench
 __pycache__
 logs/
 .env
+.DS_Store
