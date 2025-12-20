@@ -18,7 +18,7 @@ Key features:
  - All tests in routines folder passed
 
 ### Future Improvement Suggestions:
- - more efficient step dispatching in [step_dispatcher](instruments/step_dispatcher.py): current implementation is clunky, but works. 
+ - more efficient structure in [step_dispatcher](instruments/step_dispatcher.py): current implementation is clunky, but works. 
  - support for more modules of the NI TestBench: pymeasure proved quite a difficult library to work with. The NI TestBench currently only includes support for Digital IO and PSU, but other modes (MSO, Wave Generator) are also possible.
  - extending scripting support so that access to result variables is not just limited to the last action performed
 
